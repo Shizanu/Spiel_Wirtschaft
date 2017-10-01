@@ -13,7 +13,7 @@ public class LoadSaveCtrl extends AbstractController {
 
 	public void save(City city) {
 		try {
-			File file = new File("C:\\Dateien\\Spiel_Wirtschaft\\Spielstand\\Spielstand1.xml");
+			File file = new File("../../../Spielstand/Spielstand1.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(City.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
@@ -27,7 +27,7 @@ public class LoadSaveCtrl extends AbstractController {
 
 	public City load() {
 		try {
-			File file = new File("C:\\\\Dateien\\\\Spiel_Wirtschaft\\\\Spielstand\\\\Spielstand1.xml");
+			File file = new File("../../../Spielstand/Spielstand1.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(City.class);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
