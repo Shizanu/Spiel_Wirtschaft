@@ -1,5 +1,9 @@
 package spiel_wirtschaft.model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class City extends AbstractModel {
 
 	private long population;
@@ -10,6 +14,7 @@ public class City extends AbstractModel {
 		return population;
 	}
 
+	@XmlElement
 	public void setPopulation(long population) {
 		this.population = population;
 	}
@@ -18,6 +23,7 @@ public class City extends AbstractModel {
 		return name;
 	}
 
+	@XmlElement
 	public void setName(String name) {
 		this.name = name;
 	}

@@ -1,16 +1,23 @@
 package spiel_wirtschaft.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+@XmlRootElement
 public abstract class AbstractModel {
 
+	@XmlValue
 	private final long ID;
+	private static long idCounter = 1;
 
 	public AbstractModel() {
 		super();
-		ID = 1;
+		ID = idCounter;
+		idCounter++;
 	}
 
 	public long getID() {
