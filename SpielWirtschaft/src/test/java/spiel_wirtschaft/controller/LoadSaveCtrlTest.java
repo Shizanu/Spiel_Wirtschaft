@@ -16,7 +16,7 @@ public class LoadSaveCtrlTest extends AbstractTestBase {
 		testCity.setName("AnneTown");
 		loadSaveCtrl.save(testCity);
 		City cityAfterLoad = loadSaveCtrl.load();
+		Assert.assertEquals(testCity, cityAfterLoad);
 
-		Assert.assertEquals(testCity.getName(), cityAfterLoad.getName());
 	}
 }
