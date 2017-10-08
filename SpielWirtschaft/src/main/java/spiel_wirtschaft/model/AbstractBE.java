@@ -8,13 +8,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 @XmlRootElement
-public abstract class AbstractModel {
+public abstract class AbstractBE {
 
 	@XmlValue
 	private final long ID;
 	private static long idCounter = 1;
 
-	public AbstractModel() {
+	public AbstractBE() {
 		super();
 		ID = idCounter;
 		idCounter++;

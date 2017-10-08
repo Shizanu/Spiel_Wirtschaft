@@ -7,14 +7,14 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import spiel_wirtschaft.model.City;
+import spiel_wirtschaft.model.StadtBE;
 
 public class LoadSaveCtrl extends AbstractController {
 
-	public void save(City city) {
+	public void save(StadtBE city) {
 		try {
 			File file = new File("../../../Spielstand/Spielstand1.xml");
-			JAXBContext jaxbContext = JAXBContext.newInstance(City.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(StadtBE.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -25,13 +25,13 @@ public class LoadSaveCtrl extends AbstractController {
 		}
 	}
 
-	public City load() {
+	public StadtBE load() {
 		try {
 			File file = new File("../../../Spielstand/Spielstand1.xml");
-			JAXBContext jaxbContext = JAXBContext.newInstance(City.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(StadtBE.class);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			City city = (City) jaxbUnmarshaller.unmarshal(file);
+			StadtBE city = (StadtBE) jaxbUnmarshaller.unmarshal(file);
 			return city;
 
 		} catch (JAXBException e) {

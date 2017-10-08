@@ -3,16 +3,32 @@ package spiel_wirtschaft.main;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import spiel_wirtschaft.model.StadtBE;
+import spiel_wirtschaft.view.StadtOverviewVC;
 
 public class Main extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+
+	private ObservableList<StadtBE> staedte = FXCollections.observableArrayList();
+
+	public Main() {
+		super();
+		staedte.add(new StadtBE("Berlin", 100L));
+		staedte.add(new StadtBE("Hamburg", 80L));
+	}
+
+	public ObservableList<StadtBE> getStaedte() {
+		return staedte;
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -53,6 +69,9 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("../view/StadtOverview.fxml"));
 			AnchorPane stadtOverview = (AnchorPane) loader.load();
 			rootLayout.setCenter(stadtOverview);
+
+			StadtOverviewVC stadtOverviewVC = loader.getController();
+			stadtOverviewVC.setMain(this);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
