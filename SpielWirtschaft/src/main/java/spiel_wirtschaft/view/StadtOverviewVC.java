@@ -77,6 +77,29 @@ public class StadtOverviewVC {
 		showStadtDetails(selectedStadt);
 	}
 
+	@FXML
+	private void handleNeueStadt() {
+		StadtBE stadt = new StadtBE();
+		boolean isToBeSaved = main.showStadtEditDialog(stadt);
+		if (isToBeSaved) {
+			main.getStaedte().add(stadt);
+		}
+	}
+
+	@FXML
+	private void handleStadtBearbeiten() {
+		StadtBE selectedStadt = stadtTable.getSelectionModel().getSelectedItem();
+		if (selectedStadt == null) {
+			showNoStadtSelectedAlert();
+			return;
+		} else {
+			boolean isToBeSaved = main.showStadtEditDialog(selectedStadt);
+			if (isToBeSaved) {
+				showStadtDetails(selectedStadt);
+			}
+		}
+	}
+
 	private void showNoStadtSelectedAlert() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.initOwner(main.getPrimaryStage());
