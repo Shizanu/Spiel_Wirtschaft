@@ -34,7 +34,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		System.out.println("Application Starting");
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Wirschaft by Kuschelbären Spielfabrik");
+		this.primaryStage.setTitle("Wirtschaft by Kuschelbären Spielfabrik");
 
 		initRootLayout();
 

@@ -49,8 +49,8 @@
                   </GridPane>
                   <ButtonBar layoutX="209.0" layoutY="244.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
                     <buttons>
-                      <Button mnemonicParsing="false" text="Wachsen" />
-                        <Button mnemonicParsing="false" text="Schrumpfen" />
+                      <Button mnemonicParsing="false" onAction="#handleWachsen" text="Wachsen" />
+                        <Button mnemonicParsing="false" onAction="#handleSchrumpfen" text="Schrumpfen" />
                     </buttons>
                   </ButtonBar>
                </children>
