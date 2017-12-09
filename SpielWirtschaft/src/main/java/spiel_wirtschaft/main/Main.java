@@ -11,7 +11,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import spiel_wirtschaft.controller.NeuesSpielCtrl;
+import spiel_wirtschaft.model.SpielBE;
 import spiel_wirtschaft.model.StadtBE;
+import spiel_wirtschaft.view.SpielkarteVC;
 import spiel_wirtschaft.view.StadtEditDialogVC;
 import spiel_wirtschaft.view.StadtOverviewVC;
 
@@ -22,14 +25,22 @@ public class Main extends Application {
 
 	private ObservableList<StadtBE> staedte = FXCollections.observableArrayList();
 
+	private SpielBE currentlyActiveSpiel;
+
 	public Main() {
 		super();
 		staedte.add(new StadtBE("Berlin", 100L));
 		staedte.add(new StadtBE("Hamburg", 80L));
+
+		currentlyActiveSpiel = new NeuesSpielCtrl().neuesDummySpielStarten();
 	}
 
 	public ObservableList<StadtBE> getStaedte() {
 		return staedte;
+	}
+
+	public void setStaedte(ObservableList<StadtBE> staedte) {
+		this.staedte = staedte;
 	}
 
 	@Override
@@ -106,8 +117,36 @@ public class Main extends Application {
 
 			return controller.isSpeichernClicked();
 		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void showKarte() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			// TODO TRO: Refactoring safe reference to resource
+			// TODO TRO: Sinnvolle Fehlermeldung wenn Resource nicht gefunden (aktuell
+			// Absturz beim laden wegen "Location is not set"
+			loader.setLocation(Main.class.getResource("../view/Spielkarte.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Spielkarte");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Daten füllen
+			SpielkarteVC controller = loader.getController();
+			controller.setSpielkarte(currentlyActiveSpiel.getSpielkarte());
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

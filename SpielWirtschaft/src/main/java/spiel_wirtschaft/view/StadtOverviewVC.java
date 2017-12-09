@@ -88,16 +88,19 @@ public class StadtOverviewVC {
 
 	@FXML
 	private void handleStadtBearbeiten() {
-		StadtBE selectedStadt = stadtTable.getSelectionModel().getSelectedItem();
-		if (selectedStadt == null) {
-			showNoStadtSelectedAlert();
-			return;
-		} else {
-			boolean isToBeSaved = main.showStadtEditDialog(selectedStadt);
-			if (isToBeSaved) {
-				showStadtDetails(selectedStadt);
-			}
-		}
+		// FIXME TRO: Mehtode nicht mehr misbrauchen um karte anzuzeigen
+		main.showKarte();
+
+		// StadtBE selectedStadt = stadtTable.getSelectionModel().getSelectedItem();
+		// if (selectedStadt == null) {
+		// showNoStadtSelectedAlert();
+		// return;
+		// } else {
+		// boolean isToBeSaved = main.showStadtEditDialog(selectedStadt);
+		// if (isToBeSaved) {
+		// showStadtDetails(selectedStadt);
+		// }
+		// }
 	}
 
 	private void showNoStadtSelectedAlert() {
