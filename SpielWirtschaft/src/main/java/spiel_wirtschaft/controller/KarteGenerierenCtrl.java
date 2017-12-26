@@ -31,8 +31,63 @@ public class KarteGenerierenCtrl {
 				}
 			}
 			break;
-		case KONTINENT:
+		case WASSERREICH:
+			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
+				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
+					GelaendeTypEnum gelaende;
+					if (zufallsgenerator.nextDouble() < 0.75) {
+						gelaende = GelaendeTypEnum.WASSER;
+					} else {
+						gelaende = GelaendeTypEnum.LAND;
+					}
+					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
+					;
 
+				}
+			}
+		case WASSERARM:
+			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
+				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
+					GelaendeTypEnum gelaende;
+					if (zufallsgenerator.nextDouble() < 0.25) {
+						gelaende = GelaendeTypEnum.WASSER;
+					} else {
+						gelaende = GelaendeTypEnum.LAND;
+					}
+					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
+					;
+
+				}
+			}
+		case KONTINENT:
+			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
+				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
+					GelaendeTypEnum gelaende;
+					if (zufallsgenerator.nextBoolean() == true) {
+						gelaende = GelaendeTypEnum.WASSER;
+					} else {
+						gelaende = GelaendeTypEnum.LAND;
+					}
+					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
+					;
+
+				}
+			}
+			break;
+		default:
+			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
+				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
+					GelaendeTypEnum gelaende;
+					if (zufallsgenerator.nextBoolean() == true) {
+						gelaende = GelaendeTypEnum.WASSER;
+					} else {
+						gelaende = GelaendeTypEnum.LAND;
+					}
+					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
+					;
+
+				}
+			}
 			break;
 		}
 
