@@ -6,17 +6,16 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import spiel_wirtschaft.controller.NeuesSpielCtrl;
 import spiel_wirtschaft.model.SpielBE;
 import spiel_wirtschaft.model.StadtBE;
+import spiel_wirtschaft.view.HauptmenueVC;
 import spiel_wirtschaft.view.SpielkarteVC;
-import spiel_wirtschaft.view.StadtEditDialogVC;
-import spiel_wirtschaft.view.StadtOverviewVC;
 
 public class Main extends Application {
 
@@ -51,7 +50,8 @@ public class Main extends Application {
 
 		initRootLayout();
 
-		showStadtOverview();
+		showHauptmenue();
+
 	}
 
 	/**
@@ -66,7 +66,67 @@ public class Main extends Application {
 
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
+			primaryStage.setMaximized(true);
 			primaryStage.show();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void showHauptmenue() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			// TODO TRO: Refactoring safe reference to resource
+			loader.setLocation(Main.class.getResource("../view/Hauptmenue.fxml"));
+			Node hauptmenuePage = (Node) loader.load();
+			rootLayout.setCenter(hauptmenuePage);
+
+			HauptmenueVC controller = loader.getController();
+			controller.setMain(this);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void showSpiel() {
+		showDefaultLeftPanel();
+		showKarte();
+		showDefaultRightPanel();
+	}
+
+	/**
+	 * Shows the person overview inside the root layout.
+	 */
+	private void showDefaultLeftPanel() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			// TODO TRO: Refactoring safe reference to resource
+			loader.setLocation(Main.class.getResource("../view/DefaultLeftPanel.fxml"));
+			AnchorPane leftPanelPage = (AnchorPane) loader.load();
+			rootLayout.setLeft(leftPanelPage);
+
+			// TODO TRO: Controller
+			// StadtOverviewVC stadtOverviewVC = loader.getController();
+			// stadtOverviewVC.setMain(this);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void showKarte() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			// TODO TRO: Refactoring safe reference to resource
+			// TODO TRO: Sinnvolle Fehlermeldung wenn Resource nicht gefunden (aktuell
+			// Absturz beim laden wegen "Location is not set"
+			loader.setLocation(Main.class.getResource("../view/Spielkarte.fxml"));
+			AnchorPane spielkartePage = (AnchorPane) loader.load();
+
+			rootLayout.setCenter(spielkartePage);
+
+			// Daten füllen
+			SpielkarteVC controller = loader.getController();
+			controller.setSpielkarte(currentlyActiveSpiel.getSpielkarte());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -75,76 +135,17 @@ public class Main extends Application {
 	/**
 	 * Shows the person overview inside the root layout.
 	 */
-	public void showStadtOverview() {
+	private void showDefaultRightPanel() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			// TODO TRO: Refactoring safe reference to resource
-			loader.setLocation(Main.class.getResource("../view/StadtOverview.fxml"));
-			AnchorPane stadtOverview = (AnchorPane) loader.load();
-			rootLayout.setCenter(stadtOverview);
+			loader.setLocation(Main.class.getResource("../view/DefaultRightPanel.fxml"));
+			AnchorPane rightPanelPage = (AnchorPane) loader.load();
+			rootLayout.setRight(rightPanelPage);
 
-			StadtOverviewVC stadtOverviewVC = loader.getController();
-			stadtOverviewVC.setMain(this);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public boolean showStadtEditDialog(StadtBE stadtToEdit) {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			// TODO TRO: Refactoring safe reference to resource
-			// TODO TRO: Sinnvolle Fehlermeldung wenn Resource nicht gefunden (aktuell
-			// Absturz beim laden wegen "Location is not set"
-			loader.setLocation(Main.class.getResource("../view/StadtEditDialog.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Stadt bearbeiten");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-
-			// Set the person into the controller.
-			StadtEditDialogVC controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			controller.setStadtToEdit(stadtToEdit);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
-			return controller.isSpeichernClicked();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void showKarte() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			// TODO TRO: Refactoring safe reference to resource
-			// TODO TRO: Sinnvolle Fehlermeldung wenn Resource nicht gefunden (aktuell
-			// Absturz beim laden wegen "Location is not set"
-			loader.setLocation(Main.class.getResource("../view/Spielkarte.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Spielkarte");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-
-			// Daten füllen
-			SpielkarteVC controller = loader.getController();
-			controller.setSpielkarte(currentlyActiveSpiel.getSpielkarte());
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
+			// TODO TRO: Controller
+			// StadtOverviewVC stadtOverviewVC = loader.getController();
+			// stadtOverviewVC.setMain(this);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
