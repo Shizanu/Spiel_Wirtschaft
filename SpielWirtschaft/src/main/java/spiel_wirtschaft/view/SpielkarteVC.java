@@ -8,7 +8,7 @@ import spiel_wirtschaft.model.GelaendeTypEnum;
 import spiel_wirtschaft.model.KartenfeldBE;
 import spiel_wirtschaft.model.SpielkarteBE;
 
-public class SpielkarteVC {
+public class SpielkarteVC extends AbstractViewController {
 
 	private static final int FELD_PIXEL_GROESSE = 50;
 
@@ -16,10 +16,6 @@ public class SpielkarteVC {
 	private Canvas canvas;
 
 	private SpielkarteBE spielkarte;
-
-	public SpielkarteVC() {
-		super();
-	}
 
 	@FXML
 	private void initialize() {

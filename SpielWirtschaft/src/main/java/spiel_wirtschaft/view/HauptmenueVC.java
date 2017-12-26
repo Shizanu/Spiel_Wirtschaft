@@ -3,13 +3,9 @@ package spiel_wirtschaft.view;
 import javafx.fxml.FXML;
 import spiel_wirtschaft.main.Main;
 
-public class HauptmenueVC {
+public class HauptmenueVC extends AbstractViewController {
 
 	private Main main;
-
-	public HauptmenueVC() {
-		super();
-	}
 
 	public Main getMain() {
 		return main;
@@ -25,7 +21,7 @@ public class HauptmenueVC {
 	}
 
 	public void onNeuesSpielClicked() {
-		main.showSpiel();
+		main.showNeuesSpielMenue();
 	}
 
 	public void onSpielFortsetzenClicked() {

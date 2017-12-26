@@ -3,8 +3,6 @@ package spiel_wirtschaft.main;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,9 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import spiel_wirtschaft.controller.NeuesSpielCtrl;
+import spiel_wirtschaft.model.KartenGenerierungsModus;
 import spiel_wirtschaft.model.SpielBE;
-import spiel_wirtschaft.model.StadtBE;
 import spiel_wirtschaft.view.HauptmenueVC;
+import spiel_wirtschaft.view.NeuesSpielMenueVC;
 import spiel_wirtschaft.view.SpielkarteVC;
 
 public class Main extends Application {
@@ -22,24 +21,11 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 
-	private ObservableList<StadtBE> staedte = FXCollections.observableArrayList();
-
 	private SpielBE currentlyActiveSpiel;
 
 	public Main() {
 		super();
-		staedte.add(new StadtBE("Berlin", 100L));
-		staedte.add(new StadtBE("Hamburg", 80L));
 
-		currentlyActiveSpiel = new NeuesSpielCtrl().neuesDummySpielStarten();
-	}
-
-	public ObservableList<StadtBE> getStaedte() {
-		return staedte;
-	}
-
-	public void setStaedte(ObservableList<StadtBE> staedte) {
-		this.staedte = staedte;
 	}
 
 	@Override
@@ -86,6 +72,26 @@ public class Main extends Application {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void showNeuesSpielMenue() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			// TODO TRO: Refactoring safe reference to resource
+			loader.setLocation(Main.class.getResource("../view/NeuesSpielMenue.fxml"));
+			Node neuesSpielMenuePage = (Node) loader.load();
+			rootLayout.setCenter(neuesSpielMenuePage);
+
+			NeuesSpielMenueVC controller = loader.getController();
+			controller.setMain(this);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void neuesSpielStarten(KartenGenerierungsModus kartentyp) {
+		currentlyActiveSpiel = new NeuesSpielCtrl().neuesDummySpielStarten(kartentyp);
+		showSpiel();
 	}
 
 	public void showSpiel() {
