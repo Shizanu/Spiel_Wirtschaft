@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 public class HauptmenueVC extends AbstractViewController {
 
 	@Autowired
-	private RootLayoutManager rootLayoutManager;
+	private PrimaryStageManager rootLayoutManager;
 
 	@FXML
 	private void initialize() {

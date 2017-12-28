@@ -7,13 +7,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import spiel_wirtschaft.controller.SpielCtrl;
 import spiel_wirtschaft.model.KartenGenerierungsModus;
 
 @Component
 public class NeuesSpielMenueVC extends AbstractViewController {
 
 	@Autowired
-	private RootLayoutManager rootLayoutManager;
+	private PrimaryStageManager rootLayoutManager;
+
+	@Autowired
+	private SpielCtrl spielCtrl;
 
 	@FXML
 	private ChoiceBox<KartenGenerierungsModus> kartentypInput;
@@ -27,7 +31,8 @@ public class NeuesSpielMenueVC extends AbstractViewController {
 	}
 
 	public void onSpielStartenClicked() {
-		rootLayoutManager.neuesSpielStarten(kartentypInput.getSelectionModel().getSelectedItem());
+		spielCtrl.neuesSpielStarten(kartentypInput.getSelectionModel().getSelectedItem());
+		rootLayoutManager.showSpiel();
 	}
 
 	public void onAbbrechenClicked() {

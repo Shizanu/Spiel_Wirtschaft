@@ -6,8 +6,19 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import spiel_wirtschaft.view.RootLayoutManager;
+import spiel_wirtschaft.view.PrimaryStageManager;
+import spiel_wirtschaft.view.ViewFactory;
 
+/**
+ * Application launcher class. This class must be placed in the root-package of
+ * the application for 2 reasons: <br/>
+ * -SpringBoot searches for beans in all sub-packages.<br/>
+ * -Matching of Views to View-Controller in {@link ViewFactory} is based on
+ * this.
+ * 
+ * @author Tobias Rojahn
+ *
+ */
 @SpringBootApplication
 public class SpielWirtschaftApplication extends Application {
 
@@ -26,8 +37,10 @@ public class SpielWirtschaftApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		System.out.println("Application Starting");
-		RootLayoutManager rootLayoutManager = context.getBean(RootLayoutManager.class);
-		rootLayoutManager.initUserInterface(primaryStage, context);
+		ViewFactory viewFactory = context.getBean(ViewFactory.class);
+		viewFactory.setContext(context);
+		PrimaryStageManager primaryStageManager = context.getBean(PrimaryStageManager.class);
+		primaryStageManager.initUserInterface(primaryStage);
 	}
 
 }

@@ -1,11 +1,13 @@
 package spiel_wirtschaft.view;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import spiel_wirtschaft.controller.SpielCtrl;
 import spiel_wirtschaft.model.GelaendeTypEnum;
 import spiel_wirtschaft.model.KartenfeldBE;
 import spiel_wirtschaft.model.SpielkarteBE;
@@ -15,19 +17,19 @@ public class SpielkarteVC extends AbstractViewController {
 
 	private static final int FELD_PIXEL_GROESSE = 50;
 
+	@Autowired
+	private SpielCtrl spielCtrl;
+
 	@FXML
 	private Canvas canvas;
 
-	private SpielkarteBE spielkarte;
-
 	@FXML
 	private void initialize() {
-		// TODO TRO: Karte kann hier noch nicht gezeichnet werden, weil die Variable
-		// noch nicht gesetzt, was dazu führt, dass die logik am Setter hängt. Dafür
-		// brauchen wir noch eine bessere Lösung.
+		SpielkarteBE spielkarte = spielCtrl.getCurrentlyActiveSpiel().getSpielkarte();
+		drawSpielkarte(spielkarte);
 	}
 
-	private void drawSpielkarte() {
+	private void drawSpielkarte(SpielkarteBE spielkarte) {
 		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 
 		for (int xPos = 0; xPos < spielkarte.getxSize(); xPos++) {
@@ -42,15 +44,6 @@ public class SpielkarteVC extends AbstractViewController {
 						FELD_PIXEL_GROESSE);
 			}
 		}
-	}
-
-	public SpielkarteBE getSpielkarte() {
-		return spielkarte;
-	}
-
-	public void setSpielkarte(SpielkarteBE spielkarte) {
-		this.spielkarte = spielkarte;
-		drawSpielkarte();
 	}
 
 }

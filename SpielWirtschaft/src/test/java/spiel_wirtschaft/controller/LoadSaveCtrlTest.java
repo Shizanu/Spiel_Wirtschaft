@@ -3,6 +3,7 @@ package spiel_wirtschaft.controller;
 import org.junit.Assert;
 import org.junit.Test;
 
+import spiel_wirtschaft.controller.LoadSaveCtrl;
 import spiel_wirtschaft.model.StadtBE;
 import spiel_wirtschaft.test.AbstractTestBase;
 
