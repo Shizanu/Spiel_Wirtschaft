@@ -1,19 +1,15 @@
 package spiel_wirtschaft.view;
 
-import javafx.fxml.FXML;
-import spiel_wirtschaft.main.Main;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javafx.fxml.FXML;
+
+@Component
 public class HauptmenueVC extends AbstractViewController {
 
-	private Main main;
-
-	public Main getMain() {
-		return main;
-	}
-
-	public void setMain(Main main) {
-		this.main = main;
-	}
+	@Autowired
+	private RootLayoutManager rootLayoutManager;
 
 	@FXML
 	private void initialize() {
@@ -21,7 +17,7 @@ public class HauptmenueVC extends AbstractViewController {
 	}
 
 	public void onNeuesSpielClicked() {
-		main.showNeuesSpielMenue();
+		rootLayoutManager.showNeuesSpielMenue();
 	}
 
 	public void onSpielFortsetzenClicked() {

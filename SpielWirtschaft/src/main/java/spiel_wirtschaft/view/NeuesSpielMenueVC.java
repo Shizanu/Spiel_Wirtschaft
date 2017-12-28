@@ -1,26 +1,22 @@
 package spiel_wirtschaft.view;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import spiel_wirtschaft.main.Main;
 import spiel_wirtschaft.model.KartenGenerierungsModus;
 
+@Component
 public class NeuesSpielMenueVC extends AbstractViewController {
+
+	@Autowired
+	private RootLayoutManager rootLayoutManager;
 
 	@FXML
 	private ChoiceBox<KartenGenerierungsModus> kartentypInput;
-
-	private Main main;
-
-	public Main getMain() {
-		return main;
-	}
-
-	public void setMain(Main main) {
-		this.main = main;
-	}
 
 	@FXML
 	private void initialize() {
@@ -31,10 +27,10 @@ public class NeuesSpielMenueVC extends AbstractViewController {
 	}
 
 	public void onSpielStartenClicked() {
-		main.neuesSpielStarten(kartentypInput.getSelectionModel().getSelectedItem());
+		rootLayoutManager.neuesSpielStarten(kartentypInput.getSelectionModel().getSelectedItem());
 	}
 
 	public void onAbbrechenClicked() {
-		main.showHauptmenue();
+		rootLayoutManager.showHauptmenue();
 	}
 }

@@ -1,5 +1,8 @@
 package spiel_wirtschaft.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import spiel_wirtschaft.model.KartenGenerierungsModus;
 import spiel_wirtschaft.model.SpielBE;
 import spiel_wirtschaft.model.SpielkarteBE;
@@ -10,13 +13,16 @@ import spiel_wirtschaft.model.SpielkarteBE;
  * @author Tobias Rojahn
  *
  */
+@Component
 public class NeuesSpielCtrl extends AbstractController {
+
+	@Autowired
+	KarteGenerierenCtrl karteGenerierenCtrl;
 
 	/**
 	 * @return Erzeugt ein Dummy-Spiel um die Oberfläche zu entwickeln.
 	 */
 	public SpielBE neuesDummySpielStarten(KartenGenerierungsModus kartenGenerierungsModus) {
-		KarteGenerierenCtrl karteGenerierenCtrl = new KarteGenerierenCtrl();
 		SpielkarteBE spielkarte = karteGenerierenCtrl.generiereKarte(10, 10, kartenGenerierungsModus);
 		return new SpielBE(spielkarte);
 	}

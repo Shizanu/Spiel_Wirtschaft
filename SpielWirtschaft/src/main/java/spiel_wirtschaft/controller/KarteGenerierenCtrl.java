@@ -2,11 +2,14 @@ package spiel_wirtschaft.controller;
 
 import java.util.Random;
 
+import org.springframework.stereotype.Component;
+
 import spiel_wirtschaft.model.GelaendeTypEnum;
 import spiel_wirtschaft.model.KartenGenerierungsModus;
 import spiel_wirtschaft.model.KartenfeldBE;
 import spiel_wirtschaft.model.SpielkarteBE;
 
+@Component
 public class KarteGenerierenCtrl {
 
 	public SpielkarteBE generiereKarte(int xSize, int ySize, KartenGenerierungsModus modus) {

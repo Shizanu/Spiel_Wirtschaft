@@ -1,5 +1,7 @@
 package spiel_wirtschaft.view;
 
+import org.springframework.stereotype.Component;
+
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,6 +10,7 @@ import spiel_wirtschaft.model.GelaendeTypEnum;
 import spiel_wirtschaft.model.KartenfeldBE;
 import spiel_wirtschaft.model.SpielkarteBE;
 
+@Component
 public class SpielkarteVC extends AbstractViewController {
 
 	private static final int FELD_PIXEL_GROESSE = 50;

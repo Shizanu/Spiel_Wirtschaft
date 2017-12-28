@@ -1,43 +1,43 @@
-package spiel_wirtschaft.main;
+package spiel_wirtschaft.view;
 
 import java.io.IOException;
 
-import javafx.application.Application;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import spiel_wirtschaft.SpielWirtschaftApplication;
 import spiel_wirtschaft.controller.NeuesSpielCtrl;
 import spiel_wirtschaft.model.KartenGenerierungsModus;
 import spiel_wirtschaft.model.SpielBE;
-import spiel_wirtschaft.view.HauptmenueVC;
-import spiel_wirtschaft.view.NeuesSpielMenueVC;
-import spiel_wirtschaft.view.SpielkarteVC;
 
-public class Main extends Application {
+@Component
+public class RootLayoutManager {
+
+	private ConfigurableApplicationContext context;
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 
+	@Autowired
+	private NeuesSpielCtrl neuesSpielCtrl;
+
 	private SpielBE currentlyActiveSpiel;
 
-	public Main() {
-		super();
-
-	}
-
-	@Override
-	public void start(Stage primaryStage) {
-		System.out.println("Application Starting");
+	public void initUserInterface(Stage primaryStage, ConfigurableApplicationContext context) {
 		this.primaryStage = primaryStage;
+		this.context = context;
 		this.primaryStage.setTitle("Wirtschaft by Kuschelbären Spielfabrik");
 
 		initRootLayout();
 
 		showHauptmenue();
-
 	}
 
 	/**
@@ -47,7 +47,9 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			// TODO TRO: Refactoring safe reference to resource
-			loader.setLocation(Main.class.getResource("../view/RootLayout.fxml"));
+			// TODO TRO: Create fxml factory
+			loader.setLocation(SpielWirtschaftApplication.class.getResource("view/RootLayout.fxml"));
+			loader.setControllerFactory(context::getBean);
 			rootLayout = (BorderPane) loader.load();
 
 			Scene scene = new Scene(rootLayout);
@@ -63,12 +65,11 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			// TODO TRO: Refactoring safe reference to resource
-			loader.setLocation(Main.class.getResource("../view/Hauptmenue.fxml"));
+			loader.setLocation(SpielWirtschaftApplication.class.getResource("view/Hauptmenue.fxml"));
+			loader.setControllerFactory(context::getBean);
 			Node hauptmenuePage = (Node) loader.load();
 			rootLayout.setCenter(hauptmenuePage);
 
-			HauptmenueVC controller = loader.getController();
-			controller.setMain(this);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -78,19 +79,18 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			// TODO TRO: Refactoring safe reference to resource
-			loader.setLocation(Main.class.getResource("../view/NeuesSpielMenue.fxml"));
+			loader.setLocation(SpielWirtschaftApplication.class.getResource("view/NeuesSpielMenue.fxml"));
+			loader.setControllerFactory(context::getBean);
 			Node neuesSpielMenuePage = (Node) loader.load();
 			rootLayout.setCenter(neuesSpielMenuePage);
 
-			NeuesSpielMenueVC controller = loader.getController();
-			controller.setMain(this);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void neuesSpielStarten(KartenGenerierungsModus kartentyp) {
-		currentlyActiveSpiel = new NeuesSpielCtrl().neuesDummySpielStarten(kartentyp);
+		currentlyActiveSpiel = neuesSpielCtrl.neuesDummySpielStarten(kartentyp);
 		showSpiel();
 	}
 
@@ -107,7 +107,8 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			// TODO TRO: Refactoring safe reference to resource
-			loader.setLocation(Main.class.getResource("../view/DefaultLeftPanel.fxml"));
+			loader.setLocation(SpielWirtschaftApplication.class.getResource("view/DefaultLeftPanel.fxml"));
+			loader.setControllerFactory(context::getBean);
 			AnchorPane leftPanelPage = (AnchorPane) loader.load();
 			rootLayout.setLeft(leftPanelPage);
 
@@ -125,7 +126,8 @@ public class Main extends Application {
 			// TODO TRO: Refactoring safe reference to resource
 			// TODO TRO: Sinnvolle Fehlermeldung wenn Resource nicht gefunden (aktuell
 			// Absturz beim laden wegen "Location is not set"
-			loader.setLocation(Main.class.getResource("../view/Spielkarte.fxml"));
+			loader.setLocation(SpielWirtschaftApplication.class.getResource("view/Spielkarte.fxml"));
+			loader.setControllerFactory(context::getBean);
 			AnchorPane spielkartePage = (AnchorPane) loader.load();
 
 			rootLayout.setCenter(spielkartePage);
@@ -145,7 +147,8 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			// TODO TRO: Refactoring safe reference to resource
-			loader.setLocation(Main.class.getResource("../view/DefaultRightPanel.fxml"));
+			loader.setLocation(SpielWirtschaftApplication.class.getResource("view/DefaultRightPanel.fxml"));
+			loader.setControllerFactory(context::getBean);
 			AnchorPane rightPanelPage = (AnchorPane) loader.load();
 			rootLayout.setRight(rightPanelPage);
 
@@ -166,7 +169,4 @@ public class Main extends Application {
 		return primaryStage;
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
 }

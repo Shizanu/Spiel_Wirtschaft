@@ -7,8 +7,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.springframework.stereotype.Component;
+
 import spiel_wirtschaft.model.StadtBE;
 
+@Component
 public class LoadSaveCtrl extends AbstractController {
 
 	public void save(StadtBE city) {
