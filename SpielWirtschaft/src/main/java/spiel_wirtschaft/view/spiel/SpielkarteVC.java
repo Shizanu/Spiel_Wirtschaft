@@ -1,4 +1,4 @@
-package spiel_wirtschaft.view;
+package spiel_wirtschaft.view.spiel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +11,7 @@ import spiel_wirtschaft.controller.SpielCtrl;
 import spiel_wirtschaft.model.GelaendeTypEnum;
 import spiel_wirtschaft.model.KartenfeldBE;
 import spiel_wirtschaft.model.SpielkarteBE;
+import spiel_wirtschaft.view.AbstractViewController;
 
 @Component
 public class SpielkarteVC extends AbstractViewController {

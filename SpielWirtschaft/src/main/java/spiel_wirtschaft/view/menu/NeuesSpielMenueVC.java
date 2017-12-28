@@ -1,4 +1,4 @@
-package spiel_wirtschaft.view;
+package spiel_wirtschaft.view.menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import spiel_wirtschaft.controller.SpielCtrl;
 import spiel_wirtschaft.model.KartenGenerierungsModus;
+import spiel_wirtschaft.view.AbstractViewController;
+import spiel_wirtschaft.view.PrimaryStageManager;
 
 @Component
 public class NeuesSpielMenueVC extends AbstractViewController {

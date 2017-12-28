@@ -7,6 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import spiel_wirtschaft.view.menu.HauptmenueVC;
+import spiel_wirtschaft.view.spiel.DefaultLeftPanelVC;
+import spiel_wirtschaft.view.spiel.DefaultRightPanelVC;
+import spiel_wirtschaft.view.spiel.SpielkarteVC;
 
 @Component
 public class PrimaryStageManager {
@@ -39,15 +43,22 @@ public class PrimaryStageManager {
 		primaryStage.show();
 	}
 
+	public void setCenterNode(AbstractViewController controller) {
+		rootLayout.setCenter(controller.getRoot());
+	}
+
+	public void setLeftPanelNode(AbstractViewController controller) {
+		rootLayout.setLeft(controller.getRoot());
+	}
+
+	public void setRightPanelNode(AbstractViewController controller) {
+		rootLayout.setRight(controller.getRoot());
+	}
+
 	public void showHauptmenue() {
 		HauptmenueVC hauptmenueVC = viewFactory.loadView(HauptmenueVC.class);
 		Node hauptmenuePage = hauptmenueVC.getRoot();
 		rootLayout.setCenter(hauptmenuePage);
-	}
-
-	public void showNeuesSpielMenue() {
-		Node neuesSpielMenuePage = viewFactory.loadView(NeuesSpielMenueVC.class).getRoot();
-		rootLayout.setCenter(neuesSpielMenuePage);
 	}
 
 	public void showSpiel() {
@@ -71,15 +82,6 @@ public class PrimaryStageManager {
 	private void showDefaultRightPanel() {
 		Node rightPanelPage = viewFactory.loadView(DefaultRightPanelVC.class).getRoot();
 		rootLayout.setRight(rightPanelPage);
-	}
-
-	/**
-	 * Returns the main stage.
-	 * 
-	 * @return
-	 */
-	public Stage getPrimaryStage() {
-		return primaryStage;
 	}
 
 }
