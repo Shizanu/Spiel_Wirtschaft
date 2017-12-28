@@ -7,9 +7,14 @@ public class KartenfeldBE extends AbstractBE {
 
 	private final ObjectProperty<GelaendeTypEnum> gelaendeTyp;
 
-	public KartenfeldBE() {
+	private final int xPos;
+	private final int yPos;
+
+	public KartenfeldBE(int xPos, int yPos) {
 		super();
-		this.gelaendeTyp = new SimpleObjectProperty<>();
+		gelaendeTyp = new SimpleObjectProperty<>();
+		this.xPos = xPos;
+		this.yPos = yPos;
 	}
 
 	public final ObjectProperty<GelaendeTypEnum> gelaendeTypProperty() {
@@ -22,6 +27,14 @@ public class KartenfeldBE extends AbstractBE {
 
 	public final void setGelaendeTyp(final GelaendeTypEnum gelaendeTyp) {
 		this.gelaendeTypProperty().set(gelaendeTyp);
+	}
+
+	public int getxPos() {
+		return xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
 	}
 
 }
