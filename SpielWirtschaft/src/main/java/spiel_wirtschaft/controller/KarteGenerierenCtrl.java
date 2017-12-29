@@ -17,7 +17,16 @@ import spiel_wirtschaft.model.StadtBE;
 
 @Component
 public class KarteGenerierenCtrl {
-	Random zufallsgenerator = new Random(10);
+
+	// TODO: Move random to general class
+	private Random random;
+
+	public KarteGenerierenCtrl() {
+		super();
+		long seed = new Random().nextLong();
+		this.random = new Random(seed);
+		System.out.println("Initialized Random with seed: " + seed); // TODO TRO: Use proper logging
+	}
 
 	public SpielkarteBE generiereKarte(int xSize, int ySize, KartenGenerierungsModus modus) {
 		SpielkarteBE spielKarte = new SpielkarteBE(xSize, ySize);
@@ -28,7 +37,7 @@ public class KarteGenerierenCtrl {
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
 				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
 					GelaendeTypEnum gelaende;
-					if (zufallsgenerator.nextBoolean() == true) {
+					if (random.nextBoolean() == true) {
 						gelaende = GelaendeTypEnum.WASSER;
 					} else {
 						gelaende = GelaendeTypEnum.LAND;
@@ -43,7 +52,7 @@ public class KarteGenerierenCtrl {
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
 				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
 					GelaendeTypEnum gelaende;
-					if (zufallsgenerator.nextDouble() < 0.8) {
+					if (random.nextDouble() < 0.8) {
 						gelaende = GelaendeTypEnum.WASSER;
 					} else {
 						gelaende = GelaendeTypEnum.LAND;
@@ -58,7 +67,7 @@ public class KarteGenerierenCtrl {
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
 				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
 					GelaendeTypEnum gelaende;
-					if (zufallsgenerator.nextDouble() < 0.2) {
+					if (random.nextDouble() < 0.2) {
 						gelaende = GelaendeTypEnum.WASSER;
 					} else {
 						gelaende = GelaendeTypEnum.LAND;
@@ -81,7 +90,7 @@ public class KarteGenerierenCtrl {
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
 				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
 					GelaendeTypEnum gelaende;
-					if (zufallsgenerator.nextBoolean() == true) {
+					if (random.nextBoolean() == true) {
 						gelaende = GelaendeTypEnum.WASSER;
 					} else {
 						gelaende = GelaendeTypEnum.LAND;
@@ -104,8 +113,8 @@ public class KarteGenerierenCtrl {
 		List<KartenfeldBE> landmassenWarteschlange = new LinkedList<KartenfeldBE>();
 		int anzahlKontinente = 1;
 		for (int verteileKontinente = 0; verteileKontinente < anzahlKontinente; verteileKontinente++) {
-			int posX = zufallsgenerator.nextInt(groesseX);
-			int posY = zufallsgenerator.nextInt(groesseY);
+			int posX = random.nextInt(groesseX);
+			int posY = random.nextInt(groesseY);
 			KartenfeldBE aktuellesFeld = kartenfelder[posX][posY];
 			aktuellesFeld.setGelaendeTyp(GelaendeTypEnum.LAND);
 			KartenKoordinatenBE stadtKoordinaten = new KartenKoordinatenBE(posX, posY);
@@ -117,10 +126,10 @@ public class KarteGenerierenCtrl {
 			}
 		}
 
-		int tmp = (int) Math.floor(groesseY * groesseX * (zufallsgenerator.nextDouble() / 2 + 0.05));
+		int tmp = (int) Math.floor(groesseY * groesseX * (random.nextDouble() / 2 + 0.05));
 		// landmassenWarteschlange.add(kartenfelder[0][0]);
 		while (zaehlerLandmasse < tmp && !landmassenWarteschlange.isEmpty()) {
-			Collections.shuffle(landmassenWarteschlange);
+			Collections.shuffle(landmassenWarteschlange, random);
 			KartenfeldBE aktuellesFeld = landmassenWarteschlange.get(0);
 			if (aktuellesFeld.getGelaendeTyp().equals(GelaendeTypEnum.WASSER)) {
 				aktuellesFeld.setGelaendeTyp(GelaendeTypEnum.LAND);
