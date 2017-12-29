@@ -7,10 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class StadtBE extends AbstractBE {
 
 	@XmlElement
-	private final String einwohnerzahl;
+	private String einwohnerzahl;
 
 	@XmlElement
-	private final String stadtname;
+	private String stadtname;
 
 	@XmlElement
 	private final KartenKoordinatenBE position;
@@ -32,6 +32,14 @@ public class StadtBE extends AbstractBE {
 
 	public KartenKoordinatenBE getPosition() {
 		return position;
+	}
+
+	public void setEinwohnerzahl(String einwohnerzahl) {
+		this.einwohnerzahl = einwohnerzahl;
+	}
+
+	public void setStadtname(String stadtname) {
+		this.stadtname = stadtname;
 	}
 
 }
