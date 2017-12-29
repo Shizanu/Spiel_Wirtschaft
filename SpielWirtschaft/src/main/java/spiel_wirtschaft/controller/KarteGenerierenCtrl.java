@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 
 import spiel_wirtschaft.model.GelaendeTypEnum;
 import spiel_wirtschaft.model.KartenGenerierungsModus;
+import spiel_wirtschaft.model.KartenKoordinatenBE;
 import spiel_wirtschaft.model.KartenfeldBE;
 import spiel_wirtschaft.model.SpielkarteBE;
+import spiel_wirtschaft.model.StadtBE;
 
 @Component
 public class KarteGenerierenCtrl {
@@ -100,19 +102,22 @@ public class KarteGenerierenCtrl {
 		int groesseX = kartenfelder.length;
 		int groesseY = kartenfelder[0].length;
 		List<KartenfeldBE> landmassenWarteschlange = new LinkedList<KartenfeldBE>();
-		int anzahlKontinente = zufallsgenerator.nextInt(5);
-		System.out.println(anzahlKontinente);
+		int anzahlKontinente = 1;
 		for (int verteileKontinente = 0; verteileKontinente < anzahlKontinente; verteileKontinente++) {
-			// kartenfelder[verteileKontinente * Math.floorDiv(groesseX,
-			// anzahlKontinente)][verteileKontinente
-			// * Math.floorDiv(groesseY,
-			// anzahlKontinente)].setGelaendeTyp(GelaendeTypEnum.LAND);
-			landmassenWarteschlange
-					.add(kartenfelder[verteileKontinente * Math.floorDiv(groesseX, anzahlKontinente)][verteileKontinente
-							* Math.floorDiv(groesseY, anzahlKontinente)]);
+			int posX = zufallsgenerator.nextInt(groesseX);
+			int posY = zufallsgenerator.nextInt(groesseY);
+			KartenfeldBE aktuellesFeld = kartenfelder[posX][posY];
+			aktuellesFeld.setGelaendeTyp(GelaendeTypEnum.LAND);
+			KartenKoordinatenBE stadtKoordinaten = new KartenKoordinatenBE(posX, posY);
+			StadtBE startStadt = new StadtBE("10", "Kuschelwuschel", stadtKoordinaten);
+			karte.getStaedte().add(startStadt);
+			Queue<KartenfeldBE> nachbarn = karte.getNachbarfelder(aktuellesFeld);
+			while (!nachbarn.isEmpty()) {
+				landmassenWarteschlange.add(nachbarn.poll());
+			}
 		}
 
-		int tmp = (int) Math.floor(groesseY * groesseX * (zufallsgenerator.nextDouble() / 10 + 0.05));
+		int tmp = (int) Math.floor(groesseY * groesseX * (zufallsgenerator.nextDouble() / 2 + 0.05));
 		// landmassenWarteschlange.add(kartenfelder[0][0]);
 		while (zaehlerLandmasse < tmp && !landmassenWarteschlange.isEmpty()) {
 			Collections.shuffle(landmassenWarteschlange);
