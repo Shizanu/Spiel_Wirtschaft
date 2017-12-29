@@ -109,7 +109,7 @@ public class KarteGenerierenCtrl {
 			KartenfeldBE aktuellesFeld = kartenfelder[posX][posY];
 			aktuellesFeld.setGelaendeTyp(GelaendeTypEnum.LAND);
 			KartenKoordinatenBE stadtKoordinaten = new KartenKoordinatenBE(posX, posY);
-			StadtBE startStadt = new StadtBE("10", "Kuschelwuschel", stadtKoordinaten);
+			StadtBE startStadt = new StadtBE(10, "Kuschelwuschel", stadtKoordinaten);
 			karte.getStaedte().add(startStadt);
 			Queue<KartenfeldBE> nachbarn = karte.getNachbarfelder(aktuellesFeld);
 			while (!nachbarn.isEmpty()) {
