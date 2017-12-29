@@ -5,13 +5,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import javax.xml.bind.annotation.XmlElement;
+
 public class SpielkarteBE extends AbstractBE {
 
+	@XmlElement
 	private final int xSize;
+
+	@XmlElement
 	private final int ySize;
 
+	@XmlElement
 	private final KartenfeldBE[][] kartenfelder;
 
+	@XmlElement
 	private final List<StadtBE> staedte;
 
 	public SpielkarteBE(int xSize, int ySize) {

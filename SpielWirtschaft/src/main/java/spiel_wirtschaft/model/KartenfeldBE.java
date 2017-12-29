@@ -1,13 +1,19 @@
 package spiel_wirtschaft.model;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class KartenfeldBE extends AbstractBE {
 
+	@XmlElement
 	private final ObjectProperty<GelaendeTypEnum> gelaendeTyp;
 
+	@XmlElement
 	private final int xPos;
+
+	@XmlElement
 	private final int yPos;
 
 	public KartenfeldBE(int xPos, int yPos) {

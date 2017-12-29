@@ -12,6 +12,7 @@ public abstract class AbstractBE {
 
 	@XmlValue
 	private final long ID;
+
 	private static long idCounter = 1;
 
 	public AbstractBE() {
