@@ -7,6 +7,7 @@ public class SpielBE extends AbstractBE {
 	public SpielBE(SpielkarteBE spielkarte) {
 		super();
 		this.spielkarte = spielkarte;
+
 	}
 
 	public SpielkarteBE getSpielkarte() {

@@ -1,6 +1,8 @@
 package spiel_wirtschaft.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class SpielkarteBE extends AbstractBE {
@@ -10,8 +12,11 @@ public class SpielkarteBE extends AbstractBE {
 
 	private final KartenfeldBE[][] kartenfelder;
 
+	private final List<StadtBE> staedte;
+
 	public SpielkarteBE(int xSize, int ySize) {
 		super();
+		staedte = new ArrayList<>();
 		this.xSize = xSize;
 		this.ySize = ySize;
 		kartenfelder = new KartenfeldBE[xSize][ySize];
@@ -32,6 +37,10 @@ public class SpielkarteBE extends AbstractBE {
 
 	public KartenfeldBE[][] getKartenfelder() {
 		return kartenfelder;
+	}
+
+	public List<StadtBE> getStaedte() {
+		return staedte;
 	}
 
 	public Queue<KartenfeldBE> getNachbarfelder(KartenfeldBE aktuellesFeld) {
