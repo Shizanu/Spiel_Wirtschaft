@@ -18,6 +18,7 @@ import spiel_wirtschaft.controller.SpielCtrl;
 import spiel_wirtschaft.model.StadtBE;
 import spiel_wirtschaft.view.AbstractViewController;
 import spiel_wirtschaft.view.PrimaryStageManager;
+import spiel_wirtschaft.view.ViewFactory;
 
 @Component
 public class DefaultRightPanelVC extends AbstractViewController {
@@ -43,6 +44,9 @@ public class DefaultRightPanelVC extends AbstractViewController {
 	@Autowired
 	private PrimaryStageManager primaryStageManager;
 
+	@Autowired
+	private ViewFactory viewFactory;
+
 	private ObservableList<StadtUebersichtRow> stadtUebersichtData = FXCollections.observableArrayList();
 
 	@FXML
@@ -59,6 +63,17 @@ public class DefaultRightPanelVC extends AbstractViewController {
 			stadtUebersichtData.add(new StadtUebersichtRow(stadt));
 		}
 		stadtUebersichtTable.setItems(stadtUebersichtData);
+
+		stadtUebersichtTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showStadtMenueLeftPanel(newValue));
+	}
+
+	private void showStadtMenueLeftPanel(StadtUebersichtRow stadtUebersichtRow) {
+		StadtMenueLeftPanelVC stadtMenue = viewFactory.loadView(StadtMenueLeftPanelVC.class);
+		primaryStageManager.setLeftPanelNode(stadtMenue);
+		if (stadtUebersichtRow != null) {
+			stadtMenue.initializeShowStadt(stadtUebersichtRow.stadtBE);
+		}
 	}
 
 	public void onRundeBeendenClicked() {
