@@ -31,6 +31,8 @@ public class SpielkarteVC extends AbstractViewController {
 	}
 
 	private void drawSpielkarte(SpielkarteBE spielkarte) {
+		LOG.debug("Canvas-Breite: " + canvas.getWidth() + " Canvas-Höhe: " + canvas.getHeight());
+
 		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 
 		for (int xPos = 0; xPos < spielkarte.getxSize(); xPos++) {

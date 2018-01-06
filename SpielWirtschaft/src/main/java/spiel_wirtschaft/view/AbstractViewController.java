@@ -1,8 +1,9 @@
 package spiel_wirtschaft.view;
 
 import javafx.scene.Node;
+import spiel_wirtschaft.controller.AbstractController;
 
-public class AbstractViewController {
+public class AbstractViewController extends AbstractController {
 
 	/**
 	 * Root of UI-Tree associated with this view-controller.
