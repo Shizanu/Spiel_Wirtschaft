@@ -16,7 +16,7 @@ import spiel_wirtschaft.model.SpielkarteBE;
 import spiel_wirtschaft.model.StadtBE;
 
 @Component
-public class KarteGenerierenCtrl {
+public class KarteGenerierenCtrl extends AbstractController {
 
 	// TODO: Move random to general class
 	private Random random;
@@ -25,7 +25,7 @@ public class KarteGenerierenCtrl {
 		super();
 		long seed = new Random().nextLong();
 		this.random = new Random(seed);
-		System.out.println("Initialized Random with seed: " + seed); // TODO TRO: Use proper logging
+		LOG.debug("Initialized Random with seed: " + seed); // TODO TRO: Use proper logging
 	}
 
 	public SpielkarteBE generiereKarte(int xSize, int ySize, KartenGenerierungsModus modus) {
@@ -117,7 +117,7 @@ public class KarteGenerierenCtrl {
 			int posY = random.nextInt(groesseY);
 			KartenfeldBE aktuellesFeld = kartenfelder[posX][posY];
 			aktuellesFeld.setGelaendeTyp(GelaendeTypEnum.LAND);
-			KartenKoordinatenBE stadtKoordinaten = new KartenKoordinatenBE(posX, posY);
+			KartenKoordinatenBE stadtKoordinaten = new KartenKoordinatenBE(posX + 0.5, posY + 0.5);
 			StadtBE startStadt = new StadtBE(10, "Kuschelwuschel", stadtKoordinaten);
 			karte.getStaedte().add(startStadt);
 			Queue<KartenfeldBE> nachbarn = karte.getNachbarfelder(aktuellesFeld);
