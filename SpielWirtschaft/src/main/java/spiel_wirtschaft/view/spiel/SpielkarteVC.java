@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -80,6 +81,8 @@ public class SpielkarteVC extends AbstractViewController {
 		event.consume();
 	}
 
+	// TODO improve positioning code
+
 	private void drawSpielkarte() {
 		SpielBE currentlyActiveSpiel = spielCtrl.getCurrentlyActiveSpiel();
 		SpielkarteBE spielkarte = currentlyActiveSpiel.getSpielkarte();
@@ -124,7 +127,10 @@ public class SpielkarteVC extends AbstractViewController {
 			stadtImageView.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> onStadtClicked(stadt, event));
 			addToPane(stadtIconXPos, stadtIconYPos, stadtImageView);
 
-			// TODO: Stadtname anzeigen auf Karte
+			Label stadtnameLabel = new Label(stadt.getStadtname());
+			stadtnameLabel.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> onStadtClicked(stadt, event));
+			addToPane(stadtIconXPos, stadtIconYPos + stadtIconSize * 1.1, stadtnameLabel);
+			// TODO Center label below stadt
 		}
 
 	}

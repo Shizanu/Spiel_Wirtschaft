@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9" fx:controller="spiel_wirtschaft.view.spiel.StadtMenueLeftPanelVC">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="spiel_wirtschaft.view.spiel.StadtMenueLeftPanelVC">
    <children>
       <TitledPane prefHeight="200.0" prefWidth="200.0" text="Stadtmenü">
          <content>
