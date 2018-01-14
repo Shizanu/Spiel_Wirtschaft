@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -12,11 +13,11 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spiel_wirtschaft.view.spiel.StadtMenueLeftPanelVC">
    <children>
-      <TitledPane prefHeight="200.0" prefWidth="200.0" text="Stadtmenü">
+      <TitledPane prefHeight="800.0" prefWidth="200.0" text="Stadtmenü">
          <content>
-            <SplitPane dividerPositions="0.15552995391705068" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <SplitPane dividerPositions="0.04007238883143743" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="14.0" prefWidth="198.0">
                      <children>
                         <GridPane prefHeight="86.0" prefWidth="200.0">
                           <columnConstraints>
@@ -32,13 +33,26 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="134.0" prefWidth="198.0">
                      <children>
-                        <TableView fx:id="verfuegbareGebaeudeTable" layoutX="-23.0" layoutY="-68.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                          <columns>
-                            <TableColumn fx:id="gebaeudeNameColumn" prefWidth="100.0" text="Gebäude" />
-                            <TableColumn fx:id="gebaeudeVorteileColumn" prefWidth="100.0" text="Vorteil" />
-                              <TableColumn fx:id="gebaeudeKostenColumn" prefWidth="75.0" text="Kosten" />
-                          </columns>
-                        </TableView>
+                        <SplitPane dividerPositions="0.8383838383838383" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TableView fx:id="verfuegbareGebaeudeTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                      <columns>
+                                        <TableColumn fx:id="gebaeudeNameColumn" prefWidth="100.0" text="Gebäude" />
+                                        <TableColumn fx:id="gebaeudeVorteileColumn" prefWidth="100.0" text="Vorteil" />
+                                          <TableColumn fx:id="gebaeudeKostenColumn" prefWidth="75.0" text="Kosten" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <Button fx:id="kaufenButton" disable="true" mnemonicParsing="false" onMouseClicked="#onKaufenClicked" text="Kaufen" />
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
                      </children>
                   </AnchorPane>
               </items>

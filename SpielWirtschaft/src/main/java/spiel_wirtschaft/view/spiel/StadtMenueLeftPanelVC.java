@@ -9,6 +9,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,6 +19,9 @@ import spiel_wirtschaft.view.AbstractViewController;
 
 @Component
 public class StadtMenueLeftPanelVC extends AbstractViewController {
+
+	@FXML
+	private Button kaufenButton;
 
 	@FXML
 	private Label stadtNameLabel;
@@ -38,6 +42,7 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 
 	@FXML
 	private void initialize() {
+		kaufenButton.setDisable(true);
 		gebaeudeNameColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeName);
 		gebaeudeKostenColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeKosten.asObject());
 		gebaeudeVorteileColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeVorteile);
@@ -46,13 +51,25 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 			gebaeudeTableData.add(new verfuegbareGebaeudeRow(gebaeude));
 		}
 		verfuegbareGebaeudeTable.setItems(gebaeudeTableData);
-		// TODO: analog zu DefaultRightPanelVC static Klasse erzeugen. Da ValueFactory
-		// StringProperty erwartet
+		verfuegbareGebaeudeTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> enableKaufenButton(newValue));
 	}
 
 	public void initializeShowStadt(StadtBE stadt) {
 		LOG.debug(stadt.getStadtname());
 		stadtNameLabel.setText(stadt.getStadtname());
+	}
+
+	private void enableKaufenButton(verfuegbareGebaeudeRow newValue) {
+		kaufenButton.setDisable(false);
+	}
+
+	public void onKaufenClicked() {
+		verfuegbareGebaeudeRow index = verfuegbareGebaeudeTable.getSelectionModel().getSelectedItem();
+		kaufenButton.setDisable(true);
+		// spielCtrl.rundeBeenden();
+		// primaryStageManager.showSpiel(); // TODO TRO: Introduce proper UI data
+		// refresh mechanism
 	}
 
 	private static class verfuegbareGebaeudeRow {
