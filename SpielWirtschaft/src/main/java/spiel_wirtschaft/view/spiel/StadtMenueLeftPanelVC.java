@@ -41,23 +41,50 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 	private ObservableList<verfuegbareGebaeudeRow> gebaeudeTableData = FXCollections.observableArrayList();
 
 	@FXML
+	private TableView<vorhandeneGebaeudeRow> vorhandeneGebaeudeTable;
+
+	@FXML
+	private TableColumn<vorhandeneGebaeudeRow, String> vorhandeneGebaeudeNameColumn;
+
+	@FXML
+	private TableColumn<vorhandeneGebaeudeRow, String> vorhandeneGebaeudeVorteileColumn;
+
+	private ObservableList<vorhandeneGebaeudeRow> vorhandeneGebaeudeTableData = FXCollections.observableArrayList();
+
+	private StadtBE stadt;
+
+	@FXML
 	private void initialize() {
 		kaufenButton.setDisable(true);
 		gebaeudeNameColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeName);
 		gebaeudeKostenColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeKosten.asObject());
 		gebaeudeVorteileColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeVorteile);
-		gebaeudeTableData.clear();
-		for (GebaeudeEnum gebaeude : GebaeudeEnum.values()) {
-			gebaeudeTableData.add(new verfuegbareGebaeudeRow(gebaeude));
-		}
-		verfuegbareGebaeudeTable.setItems(gebaeudeTableData);
-		verfuegbareGebaeudeTable.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> enableKaufenButton(newValue));
+
 	}
 
 	public void initializeShowStadt(StadtBE stadt) {
 		LOG.debug(stadt.getStadtname());
 		stadtNameLabel.setText(stadt.getStadtname());
+		this.stadt = stadt;
+		gebaeudeTableData.clear();
+		for (GebaeudeEnum gebaeude : GebaeudeEnum.values()) {
+			if (!stadt.getGebauteGebaeude().contains(gebaeude)) {
+				gebaeudeTableData.add(new verfuegbareGebaeudeRow(gebaeude));
+			}
+		}
+		verfuegbareGebaeudeTable.setItems(gebaeudeTableData);
+		verfuegbareGebaeudeTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> enableKaufenButton(newValue));
+
+		vorhandeneGebaeudeNameColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeName);
+		vorhandeneGebaeudeVorteileColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeVorteile);
+		vorhandeneGebaeudeTableData.clear();
+		if (!stadt.getGebauteGebaeude().isEmpty()) {
+			for (GebaeudeEnum gebaeude : stadt.getGebauteGebaeude()) {
+				vorhandeneGebaeudeTableData.add(new vorhandeneGebaeudeRow(gebaeude));
+			}
+			vorhandeneGebaeudeTable.setItems(vorhandeneGebaeudeTableData);
+		}
 	}
 
 	private void enableKaufenButton(verfuegbareGebaeudeRow newValue) {
@@ -65,8 +92,10 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 	}
 
 	public void onKaufenClicked() {
-		verfuegbareGebaeudeRow index = verfuegbareGebaeudeTable.getSelectionModel().getSelectedItem();
+		verfuegbareGebaeudeRow aktuellesGebaeudeRow = verfuegbareGebaeudeTable.getSelectionModel().getSelectedItem();
 		kaufenButton.setDisable(true);
+		stadt.addGebaeude(aktuellesGebaeudeRow.gebaeudeEnum);
+		initializeShowStadt(stadt);
 		// spielCtrl.rundeBeenden();
 		// primaryStageManager.showSpiel(); // TODO TRO: Introduce proper UI data
 		// refresh mechanism
@@ -112,6 +141,47 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 
 		public final void setDisplayGebaeudeKosten(final Integer displayGebaeudeKosten) {
 			this.displayGebaeudeKostenProperty().set(displayGebaeudeKosten);
+		}
+
+		public final StringProperty displayGebaeudeVorteileProperty() {
+			return this.displayGebaeudeVorteile;
+		}
+
+		public final String getDisplayGebaeudeVorteile() {
+			return this.displayGebaeudeVorteileProperty().get();
+		}
+
+		public final void setDisplayGebaeudeVorteile(final String displayGebaeudeVorteile) {
+			this.displayGebaeudeVorteileProperty().set(displayGebaeudeVorteile);
+		}
+
+	}
+
+	private static class vorhandeneGebaeudeRow {
+
+		private GebaeudeEnum gebaeudeEnum;
+
+		private final StringProperty displayGebaeudeName;
+
+		private final StringProperty displayGebaeudeVorteile;
+
+		public vorhandeneGebaeudeRow(GebaeudeEnum gebaeudeEnum) {
+			super();
+			this.gebaeudeEnum = gebaeudeEnum;
+			displayGebaeudeName = new SimpleStringProperty(gebaeudeEnum.getGebaeudeName());
+			displayGebaeudeVorteile = new SimpleStringProperty(gebaeudeEnum.getVorteile());
+		}
+
+		public final StringProperty displayGebaeudeNameProperty() {
+			return this.displayGebaeudeName;
+		}
+
+		public final String getDisplayGebaeudeName() {
+			return this.displayGebaeudeNameProperty().get();
+		}
+
+		public final void setDisplayGebaeudeName(final String displayGebaeudeName) {
+			this.displayGebaeudeNameProperty().set(displayGebaeudeName);
 		}
 
 		public final StringProperty displayGebaeudeVorteileProperty() {

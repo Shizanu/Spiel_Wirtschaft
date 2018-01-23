@@ -11,33 +11,51 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spiel_wirtschaft.view.spiel.StadtMenueLeftPanelVC">
+<AnchorPane minWidth="300.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spiel_wirtschaft.view.spiel.StadtMenueLeftPanelVC">
    <children>
-      <TitledPane prefHeight="800.0" prefWidth="200.0" text="Stadtmenü">
+      <TitledPane minWidth="300.0" prefHeight="800.0" prefWidth="300.0" text="Stadtmenü">
          <content>
-            <SplitPane dividerPositions="0.04007238883143743" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <SplitPane dividerPositions="0.5" minWidth="300.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="300.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="14.0" prefWidth="198.0">
+                <AnchorPane minHeight="30.0" minWidth="300.0" prefHeight="14.0" prefWidth="300.0">
                      <children>
-                        <GridPane prefHeight="86.0" prefWidth="200.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <Label fx:id="stadtNameLabel" text="Stadt" />
+                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="300.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <GridPane minWidth="300.0" prefHeight="86.0" prefWidth="200.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                    </GridPane>
+                                    <Label fx:id="stadtNameLabel" text="Stadt" />
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="300.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TableView fx:id="vorhandeneGebaeudeTable" minWidth="300.0" prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn fx:id="vorhandeneGebaeudeNameColumn" prefWidth="75.0" text="Gebäude" />
+                                        <TableColumn fx:id="vorhandeneGebaeudeVorteileColumn" prefWidth="75.0" text="Vorteile" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="134.0" prefWidth="198.0">
+                <AnchorPane minHeight="30.0" minWidth="300.0" prefHeight="134.0" prefWidth="198.0">
                      <children>
-                        <SplitPane dividerPositions="0.8383838383838383" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
+                        <SplitPane dividerPositions="0.8383838383838383" minWidth="300.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
                           <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <AnchorPane minHeight="0.0" minWidth="300.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TableView fx:id="verfuegbareGebaeudeTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                    <TableView fx:id="verfuegbareGebaeudeTable" minWidth="300.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                       <columns>
                                         <TableColumn fx:id="gebaeudeNameColumn" prefWidth="100.0" text="Gebäude" />
                                         <TableColumn fx:id="gebaeudeVorteileColumn" prefWidth="100.0" text="Vorteil" />
@@ -46,7 +64,7 @@
                                     </TableView>
                                  </children>
                               </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <AnchorPane minHeight="30.0" minWidth="300.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
                                     <Button fx:id="kaufenButton" disable="true" mnemonicParsing="false" onMouseClicked="#onKaufenClicked" text="Kaufen" />
                                  </children>

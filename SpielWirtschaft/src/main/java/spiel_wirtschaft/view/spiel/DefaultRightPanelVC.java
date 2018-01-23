@@ -69,10 +69,12 @@ public class DefaultRightPanelVC extends AbstractViewController {
 	}
 
 	private void showStadtMenueLeftPanel(StadtUebersichtRow stadtUebersichtRow) {
-		if (stadtUebersichtRow.stadtBE != null) {
+		if (stadtUebersichtRow != null && stadtUebersichtRow.stadtBE != null) {
 			StadtMenueLeftPanelVC stadtMenue = viewFactory.loadView(StadtMenueLeftPanelVC.class);
 			primaryStageManager.setLeftPanelNode(stadtMenue);
 			stadtMenue.initializeShowStadt(stadtUebersichtRow.stadtBE);
+		} else {
+			primaryStageManager.setLeftPanelNode(viewFactory.loadView(DefaultLeftPanelVC.class));
 		}
 	}
 
