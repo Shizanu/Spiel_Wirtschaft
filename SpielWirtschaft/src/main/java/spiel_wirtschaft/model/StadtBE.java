@@ -15,6 +15,7 @@ public class StadtBE extends AbstractBE {
 	@XmlElement
 	private final KartenKoordinatenBE position;
 
+	@XmlElement
 	private final ArrayList<GebaeudeEnum> gebauteGebaeude;
 
 	public StadtBE(int einwohnerzahl, String stadtname, KartenKoordinatenBE position) {

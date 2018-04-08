@@ -2,8 +2,9 @@ package spiel_wirtschaft.model;
 
 public enum GebaeudeEnum {
 
-	TEMPEL("Tempel", 1, "glückliche Bevölkerung"), MARKTPLATZ("Marktplatz", 1,
-			"Wirtschaftswachstum innerhalb der Stadt"), SCHMIED("Schmied", 1, "Verbesserung berittener Einheiten");
+	TEMPEL("Tempel", 1, "glückliche Bevölkerung"),
+	MARKTPLATZ("Marktplatz", 1, "Wirtschaftswachstum innerhalb der Stadt"),
+	SCHMIED("Schmied", 1, "Verbesserung berittener Einheiten");
 
 	private final String gebaeudeName;
 	private final int kosten;
