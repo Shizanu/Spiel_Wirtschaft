@@ -5,5 +5,8 @@ import spiel_wirtschaft.model.rundendelta.StadtRundenDelta;
 
 public interface StadtIsolatedEffect {
 
-	public void apply(StadtBE stadt, StadtRundenDelta delta);
+	public static final StadtIsolatedEffect NONE = (stadt, delta) -> {
+	};
+
+	public void apply(StadtBE stadt, StadtRundenDelta stadtRundenDelta);
 }

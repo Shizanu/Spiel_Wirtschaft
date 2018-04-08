@@ -116,7 +116,7 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 			this.gebaeudeEnum = gebaeudeEnum;
 			displayGebaeudeName = new SimpleStringProperty(gebaeudeEnum.getGebaeudeName());
 			displayGebaeudeKosten = new SimpleIntegerProperty(gebaeudeEnum.getKosten());
-			displayGebaeudeVorteile = new SimpleStringProperty(gebaeudeEnum.getVorteile());
+			displayGebaeudeVorteile = new SimpleStringProperty(gebaeudeEnum.getVorteileDisplayText());
 		}
 
 		public final StringProperty displayGebaeudeNameProperty() {
@@ -169,7 +169,7 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 			super();
 			this.gebaeudeEnum = gebaeudeEnum;
 			displayGebaeudeName = new SimpleStringProperty(gebaeudeEnum.getGebaeudeName());
-			displayGebaeudeVorteile = new SimpleStringProperty(gebaeudeEnum.getVorteile());
+			displayGebaeudeVorteile = new SimpleStringProperty(gebaeudeEnum.getVorteileDisplayText());
 		}
 
 		public final StringProperty displayGebaeudeNameProperty() {

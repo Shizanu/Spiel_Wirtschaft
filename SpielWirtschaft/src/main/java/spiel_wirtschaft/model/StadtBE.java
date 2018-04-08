@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import spiel_wirtschaft.model.rundendelta.StadtEffekteFuerNation;
 import spiel_wirtschaft.model.rundendelta.StadtRundenDelta;
 
 public class StadtBE extends AbstractBE {
 
 	private transient StadtRundenDelta rundenDelta;
+	private transient StadtEffekteFuerNation effekteFuerNation;
 
 	@XmlElement
 	private int einwohnerzahl;
@@ -36,6 +38,14 @@ public class StadtBE extends AbstractBE {
 
 	public void setRundenDelta(StadtRundenDelta rundenDelta) {
 		this.rundenDelta = rundenDelta;
+	}
+
+	public StadtEffekteFuerNation getEffekteFuerNation() {
+		return effekteFuerNation;
+	}
+
+	public void setEffekteFuerNation(StadtEffekteFuerNation effekteFuerNation) {
+		this.effekteFuerNation = effekteFuerNation;
 	}
 
 	public int getEinwohnerzahl() {
