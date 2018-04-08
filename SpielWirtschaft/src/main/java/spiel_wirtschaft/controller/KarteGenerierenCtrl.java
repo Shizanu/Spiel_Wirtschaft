@@ -43,10 +43,9 @@ public class KarteGenerierenCtrl extends AbstractController {
 						gelaende = GelaendeTypEnum.LAND;
 					}
 					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
-					;
-
 				}
 			}
+			addStartStadt(spielKarte, "Kuschelwuschel");
 			break;
 		case WASSERREICH:
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
@@ -58,10 +57,9 @@ public class KarteGenerierenCtrl extends AbstractController {
 						gelaende = GelaendeTypEnum.LAND;
 					}
 					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
-					;
-
 				}
 			}
+			addStartStadt(spielKarte, "Kuschelwuschel");
 			break;
 		case WASSERARM:
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
@@ -73,10 +71,9 @@ public class KarteGenerierenCtrl extends AbstractController {
 						gelaende = GelaendeTypEnum.LAND;
 					}
 					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
-					;
-
 				}
 			}
+			addStartStadt(spielKarte, "Kuschelwuschel");
 			break;
 		case KONTINENT:
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
@@ -85,6 +82,7 @@ public class KarteGenerierenCtrl extends AbstractController {
 				}
 			}
 			kontinenteErstellen(spielKarte);
+			addStartStadt(spielKarte, "Kuschelwuschel");
 			break;
 		default:
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
@@ -96,10 +94,9 @@ public class KarteGenerierenCtrl extends AbstractController {
 						gelaende = GelaendeTypEnum.LAND;
 					}
 					kartenfelder[feldXRichtung][feldYRichtung].setGelaendeTyp(gelaende);
-					;
-
 				}
 			}
+			addStartStadt(spielKarte, "Kuschelwuschel");
 			break;
 		}
 		return spielKarte;
@@ -117,9 +114,6 @@ public class KarteGenerierenCtrl extends AbstractController {
 			int posY = random.nextInt(groesseY);
 			KartenfeldBE aktuellesFeld = kartenfelder[posX][posY];
 			aktuellesFeld.setGelaendeTyp(GelaendeTypEnum.LAND);
-			KartenKoordinatenBE stadtKoordinaten = new KartenKoordinatenBE(posX + 0.5, posY + 0.5);
-			StadtBE startStadt = new StadtBE(10, "Kuschelwuschel", stadtKoordinaten);
-			karte.getStaedte().add(startStadt);
 			Queue<KartenfeldBE> nachbarn = karte.getNachbarfelder(aktuellesFeld);
 			while (!nachbarn.isEmpty()) {
 				landmassenWarteschlange.add(nachbarn.poll());
@@ -140,6 +134,19 @@ public class KarteGenerierenCtrl extends AbstractController {
 				zaehlerLandmasse++;
 			}
 
+		}
+	}
+
+	private void addStartStadt(SpielkarteBE karte, String stadtName) {
+		boolean stadtNotSet = true;
+		while (stadtNotSet) {
+			int posX = random.nextInt(karte.getKartenfelder().length);
+			int posY = random.nextInt(karte.getKartenfelder().length);
+			if (karte.getKartenfelder()[posX][posY].getGelaendeTyp().equals(GelaendeTypEnum.LAND)) {
+				StadtBE startStadt = new StadtBE(10, stadtName, new KartenKoordinatenBE(posX + 0.5, posY + 0.5));
+				karte.getStaedte().add(startStadt);
+				stadtNotSet = false;
+			}
 		}
 	}
 }
