@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import spiel_wirtschaft.model.rundendelta.StadtRundenDelta;
+
 public class StadtBE extends AbstractBE {
+
+	private transient StadtRundenDelta rundenDelta;
 
 	@XmlElement
 	private int einwohnerzahl;
@@ -24,6 +28,14 @@ public class StadtBE extends AbstractBE {
 		this.stadtname = stadtname;
 		this.position = position;
 		this.gebauteGebaeude = new ArrayList<GebaeudeEnum>();
+	}
+
+	public StadtRundenDelta getRundenDelta() {
+		return rundenDelta;
+	}
+
+	public void setRundenDelta(StadtRundenDelta rundenDelta) {
+		this.rundenDelta = rundenDelta;
 	}
 
 	public int getEinwohnerzahl() {
