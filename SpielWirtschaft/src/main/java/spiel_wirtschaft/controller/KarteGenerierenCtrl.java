@@ -29,7 +29,8 @@ public class KarteGenerierenCtrl extends AbstractController {
 	}
 
 	public SpielkarteBE generiereKarte(int xSize, int ySize, KartenGenerierungsModus modus) {
-		SpielkarteBE spielKarte = new SpielkarteBE(xSize, ySize);
+		SpielkarteBE spielKarte = new SpielkarteBE();
+		spielKarte.init(xSize, ySize);
 		KartenfeldBE[][] kartenfelder = spielKarte.getKartenfelder();
 
 		switch (modus) {
@@ -88,7 +89,7 @@ public class KarteGenerierenCtrl extends AbstractController {
 			for (int feldXRichtung = 0; feldXRichtung < xSize; feldXRichtung++) {
 				for (int feldYRichtung = 0; feldYRichtung < ySize; feldYRichtung++) {
 					GelaendeTypEnum gelaende;
-					if (random.nextBoolean() == true) {
+					if ((feldXRichtung + feldYRichtung) % 2 == 0) {
 						gelaende = GelaendeTypEnum.WASSER;
 					} else {
 						gelaende = GelaendeTypEnum.LAND;
@@ -143,7 +144,9 @@ public class KarteGenerierenCtrl extends AbstractController {
 			int posX = random.nextInt(karte.getKartenfelder().length);
 			int posY = random.nextInt(karte.getKartenfelder().length);
 			if (karte.getKartenfelder()[posX][posY].getGelaendeTyp().equals(GelaendeTypEnum.LAND)) {
-				StadtBE startStadt = new StadtBE(10, stadtName, new KartenKoordinatenBE(posX + 0.5, posY + 0.5));
+				KartenKoordinatenBE kartenkoordinaten = new KartenKoordinatenBE();
+				kartenkoordinaten.init(posX + 0.5, posY + 0.5);
+				StadtBE startStadt = new StadtBE(10, stadtName, kartenkoordinaten);
 				karte.getStaedte().add(startStadt);
 				stadtNotSet = false;
 			}

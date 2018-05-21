@@ -25,14 +25,18 @@ public class StadtBE extends AbstractBE {
 	private final KartenKoordinatenBE position;
 
 	@XmlElement
-	private final ArrayList<GebaeudeEnum> gebauteGebaeude;
+	private final ArrayList<GebaeudeEnum> gebauteGebaeude = new ArrayList<GebaeudeEnum>();
+
+	public StadtBE() {
+		super();
+		position = null;
+	}
 
 	public StadtBE(int einwohnerzahl, String stadtname, KartenKoordinatenBE position) {
 		super();
 		this.einwohnerzahl = einwohnerzahl;
 		this.stadtname = stadtname;
 		this.position = position;
-		this.gebauteGebaeude = new ArrayList<GebaeudeEnum>();
 	}
 
 	public NationBE getNation() {
