@@ -13,6 +13,9 @@ public class StadtBE extends AbstractBE {
 	private transient StadtEffekteFuerNation effekteFuerNation;
 
 	@XmlElement
+	private NationBE nation;
+
+	@XmlElement
 	private int einwohnerzahl;
 
 	@XmlElement
@@ -30,6 +33,14 @@ public class StadtBE extends AbstractBE {
 		this.stadtname = stadtname;
 		this.position = position;
 		this.gebauteGebaeude = new ArrayList<GebaeudeEnum>();
+	}
+
+	public NationBE getNation() {
+		return nation;
+	}
+
+	public void setNation(NationBE nation) {
+		this.nation = nation;
 	}
 
 	public StadtRundenDelta getRundenDelta() {

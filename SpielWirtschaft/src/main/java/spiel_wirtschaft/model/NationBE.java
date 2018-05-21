@@ -39,6 +39,9 @@ public class NationBE extends AbstractBE {
 		return staedte;
 	}
 
+	// TODO Stadt zu Nation hinzufügen und umgekehrt -> ueber ctrl -> Städte gründen
+	// über NationCtrl
+
 	public BigDecimal getGeld() {
 		return geld;
 	}
@@ -49,6 +52,14 @@ public class NationBE extends AbstractBE {
 
 	public Map<WarenEnum, Long> getWaren() {
 		return waren;
+	}
+
+	public long getVerfuegbareMenge(WarenEnum ware) {
+		return waren.get(ware);
+	}
+
+	public void subtrahiereVonWarenmenge(WarenEnum ware, long menge) {
+		waren.put(ware, waren.get(ware) - menge);
 	}
 
 	public void setWaren(Map<WarenEnum, Long> waren) {

@@ -1,7 +1,10 @@
 package spiel_wirtschaft.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import spiel_wirtschaft.model.Gebaeude;
+import spiel_wirtschaft.model.GebaeudeEnum;
 import spiel_wirtschaft.model.StadtBE;
 import spiel_wirtschaft.model.rundendelta.StadtEffekteFuerNation;
 import spiel_wirtschaft.model.rundendelta.StadtRundenDelta;
@@ -10,6 +13,15 @@ import spiel_wirtschaft.model.rundendelta.StadtRundenDelta;
 public class StadtCtrl extends AbstractController implements RundeBeendenEntityCtrl<StadtBE> {
 
 	private static final int STADT_BASIS_WACHSUM_PRO_RUNDE = 10;
+
+	@Autowired
+	private NationCtrl nationCtrl;
+
+	public void gebaudeBauen(StadtBE stadt, Gebaeude gebaeude) {
+		nationCtrl.bezahlen(stadt.getNation(), gebaeude.getGeldKosten(), gebaeude.getWarenKosten());
+		// TODO TRO: StadtBE sollte das Interface für Gebäude benutzen
+		stadt.addGebaeude((GebaeudeEnum) gebaeude);
+	}
 
 	@Override
 	public void computeRundenDelta(StadtBE stadt) {

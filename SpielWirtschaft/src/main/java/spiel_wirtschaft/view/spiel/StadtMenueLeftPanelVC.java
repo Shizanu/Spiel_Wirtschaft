@@ -1,5 +1,6 @@
 package spiel_wirtschaft.view.spiel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javafx.beans.property.IntegerProperty;
@@ -13,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import spiel_wirtschaft.controller.StadtCtrl;
+import spiel_wirtschaft.model.Gebaeude;
 import spiel_wirtschaft.model.GebaeudeEnum;
 import spiel_wirtschaft.model.StadtBE;
 import spiel_wirtschaft.view.AbstractViewController;
@@ -49,6 +52,9 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 	@FXML
 	private TableColumn<vorhandeneGebaeudeRow, String> vorhandeneGebaeudeVorteileColumn;
 
+	@Autowired
+	private StadtCtrl stadtCtrl;
+
 	private ObservableList<vorhandeneGebaeudeRow> vorhandeneGebaeudeTableData = FXCollections.observableArrayList();
 
 	private StadtBE stadt;
@@ -80,7 +86,7 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 		vorhandeneGebaeudeVorteileColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeVorteile);
 		vorhandeneGebaeudeTableData.clear();
 		if (!stadt.getGebauteGebaeude().isEmpty()) {
-			for (GebaeudeEnum gebaeude : stadt.getGebauteGebaeude()) {
+			for (Gebaeude gebaeude : stadt.getGebauteGebaeude()) {
 				vorhandeneGebaeudeTableData.add(new vorhandeneGebaeudeRow(gebaeude));
 			}
 			vorhandeneGebaeudeTable.setItems(vorhandeneGebaeudeTableData);
@@ -94,7 +100,7 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 	public void onKaufenClicked() {
 		verfuegbareGebaeudeRow aktuellesGebaeudeRow = verfuegbareGebaeudeTable.getSelectionModel().getSelectedItem();
 		kaufenButton.setDisable(true);
-		stadt.addGebaeude(aktuellesGebaeudeRow.gebaeudeEnum);
+		stadtCtrl.gebaudeBauen(stadt, aktuellesGebaeudeRow.gebaeudeEnum);
 		initializeShowStadt(stadt);
 		// spielCtrl.rundeBeenden();
 		// primaryStageManager.showSpiel(); // TODO TRO: Introduce proper UI data
@@ -115,7 +121,8 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 			super();
 			this.gebaeudeEnum = gebaeudeEnum;
 			displayGebaeudeName = new SimpleStringProperty(gebaeudeEnum.getGebaeudeName());
-			displayGebaeudeKosten = new SimpleIntegerProperty(gebaeudeEnum.getKosten());
+			// TODO TRO: Darstellung von BigDecimal in Oberfläche
+			displayGebaeudeKosten = new SimpleIntegerProperty(gebaeudeEnum.getGeldKosten().intValue());
 			displayGebaeudeVorteile = new SimpleStringProperty(gebaeudeEnum.getVorteileDisplayText());
 		}
 
@@ -159,13 +166,13 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 
 	private static class vorhandeneGebaeudeRow {
 
-		private GebaeudeEnum gebaeudeEnum;
+		private Gebaeude gebaeudeEnum;
 
 		private final StringProperty displayGebaeudeName;
 
 		private final StringProperty displayGebaeudeVorteile;
 
-		public vorhandeneGebaeudeRow(GebaeudeEnum gebaeudeEnum) {
+		public vorhandeneGebaeudeRow(Gebaeude gebaeudeEnum) {
 			super();
 			this.gebaeudeEnum = gebaeudeEnum;
 			displayGebaeudeName = new SimpleStringProperty(gebaeudeEnum.getGebaeudeName());
