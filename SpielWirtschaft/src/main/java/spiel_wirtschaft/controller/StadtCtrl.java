@@ -18,7 +18,9 @@ public class StadtCtrl extends AbstractController implements RundeBeendenEntityC
 	private NationCtrl nationCtrl;
 
 	public void gebaudeBauen(StadtBE stadt, Gebaeude gebaeude) {
-		nationCtrl.bezahlen(stadt.getNation(), gebaeude.getGeldKosten(), gebaeude.getWarenKosten());
+		// TODO TRO: Bezahlen für Gebäude anschalten
+		// nationCtrl.bezahlen(stadt.getNation(), gebaeude.getGeldKosten(),
+		// gebaeude.getWarenKosten());
 		// TODO TRO: StadtBE sollte das Interface für Gebäude benutzen
 		stadt.addGebaeude((GebaeudeEnum) gebaeude);
 	}
