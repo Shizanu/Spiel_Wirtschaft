@@ -1,5 +1,6 @@
 package spiel_wirtschaft.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class NationBE extends AbstractBE {
 	private final List<StadtBE> staedte;
 
 	@XmlElement
-	private long geld;
+	private BigDecimal geld;
 
 	@XmlElement
 	private Map<WarenEnum, Long> waren;
@@ -38,11 +39,11 @@ public class NationBE extends AbstractBE {
 		return staedte;
 	}
 
-	public long getGeld() {
+	public BigDecimal getGeld() {
 		return geld;
 	}
 
-	public void setGeld(long geld) {
+	public void setGeld(BigDecimal geld) {
 		this.geld = geld;
 	}
 

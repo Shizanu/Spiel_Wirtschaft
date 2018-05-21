@@ -1,40 +1,53 @@
 package spiel_wirtschaft.model;
 
+import java.math.BigDecimal;
+
+import spiel_wirtschaft.model.effects.StadtEffektFuerNation;
 import spiel_wirtschaft.model.effects.StadtIsolatedEffect;
 
 public enum GebaeudeEnum {
 
-	TEMPEL("Tempel", 1, "glückliche Bevölkerung", (stadt, delta) -> delta.einwohnerzahlChange += 5),
-	MARKTPLATZ("Marktplatz", 1, "Wirtschaftswachstum innerhalb der Stadt",
-			(stadt, delta) -> delta.einwohnerzahlChange += 5),
-	SCHMIED("Schmied", 1, "Verbesserung berittener Einheiten", (stadt, delta) -> delta.einwohnerzahlChange += 5);
+	TEMPEL("Tempel", 1, "+5 Einwohner pro Runde",
+			(stadt, stadtRundenDelta) -> stadtRundenDelta.einwohnerzahlChange += 5, StadtEffektFuerNation.NONE),
+	MARKTPLATZ("Marktplatz", 1, "+1 Geld pro Runde", StadtIsolatedEffect.NONE, (stadt,
+			stadtEffekteFuerNation) -> stadtEffekteFuerNation.geldEinnahmen = stadtEffekteFuerNation.geldEinnahmen
+					.add(new BigDecimal("1"))),
+	SCHMIED("Schmied", 1, "Verbesserung berittener Einheiten",
+			(stadt, stadtRundenDelta) -> stadtRundenDelta.einwohnerzahlChange += 5, StadtEffektFuerNation.NONE);
 
 	private final String gebaeudeName;
 	private final int kosten;
 	private final String vorteileDisplayText;
-	private final StadtIsolatedEffect effekt;
+	private final StadtIsolatedEffect stadtIsolatedEffect;
+	private final StadtEffektFuerNation stadtEffektFuerNation;
 
-	private GebaeudeEnum(String gebaeudeName, int kosten, String vorteile, StadtIsolatedEffect effekt) {
+	private GebaeudeEnum(String gebaeudeName, int kosten, String vorteile, StadtIsolatedEffect stadtIsolatedEffect,
+			StadtEffektFuerNation stadtEffektFuerNation) {
 		this.gebaeudeName = gebaeudeName;
 		this.kosten = kosten;
 		this.vorteileDisplayText = vorteile;
-		this.effekt = effekt;
+		this.stadtIsolatedEffect = stadtIsolatedEffect;
+		this.stadtEffektFuerNation = stadtEffektFuerNation;
 	}
 
 	public String getGebaeudeName() {
 		return gebaeudeName;
 	}
 
-	public String getVorteile() {
-		return vorteileDisplayText;
-	}
-
 	public int getKosten() {
 		return kosten;
 	}
 
-	public StadtIsolatedEffect getEffekt() {
-		return effekt;
+	public String getVorteileDisplayText() {
+		return vorteileDisplayText;
+	}
+
+	public StadtIsolatedEffect getStadtIsolatedEffect() {
+		return stadtIsolatedEffect;
+	}
+
+	public StadtEffektFuerNation getStadtEffektFuerNation() {
+		return stadtEffektFuerNation;
 	}
 
 }

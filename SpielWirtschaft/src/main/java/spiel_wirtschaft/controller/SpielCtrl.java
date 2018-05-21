@@ -39,22 +39,26 @@ public class SpielCtrl extends AbstractController {
 
 	public void rundeBeenden() {
 		currentlyActiveSpiel.incrementRunde();
-		processRundeBeendenPhase(new RundeBeendenFunction() {
+
+		RundeBeendenFunction computeDeltaPhase = new RundeBeendenFunction() {
 
 			@Override
 			public <T extends AbstractBE> void applyPhase(RundeBeendenEntityCtrl<T> ctrl, T entity) {
 				ctrl.computeRundenDelta(entity);
 
 			}
-		});
-		processRundeBeendenPhase(new RundeBeendenFunction() {
+		};
+		processRundeBeendenPhase(computeDeltaPhase);
+
+		RundeBeendenFunction applyDeltaPhase = new RundeBeendenFunction() {
 
 			@Override
 			public <T extends AbstractBE> void applyPhase(RundeBeendenEntityCtrl<T> ctrl, T entity) {
 				ctrl.applyRundenDelta(entity);
 
 			}
-		});
+		};
+		processRundeBeendenPhase(applyDeltaPhase);
 
 	}
 

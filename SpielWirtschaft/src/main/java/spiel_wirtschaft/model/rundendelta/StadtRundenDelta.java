@@ -1,5 +1,10 @@
 package spiel_wirtschaft.model.rundendelta;
 
+/**
+ * Repräsentiert alle Änderungen an einer Stadt die im Zuge des "Runde beendens"
+ * geschehen.
+ *
+ */
 public class StadtRundenDelta {
 
 	public int einwohnerzahlChange;
@@ -8,13 +13,4 @@ public class StadtRundenDelta {
 		super();
 		this.einwohnerzahlChange = 0;
 	}
-
-	public int getEinwohnerzahlChange() {
-		return einwohnerzahlChange;
-	}
-
-	public void setEinwohnerzahlChange(int einwohnerzahlChange) {
-		this.einwohnerzahlChange = einwohnerzahlChange;
-	}
-
 }
