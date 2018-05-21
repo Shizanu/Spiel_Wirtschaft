@@ -9,15 +9,15 @@ import javax.xml.bind.Unmarshaller;
 
 import org.springframework.stereotype.Component;
 
-import spiel_wirtschaft.model.StadtBE;
+import spiel_wirtschaft.model.SpielBE;
 
 @Component
 public class LoadSaveCtrl extends AbstractController {
 
-	public void save(StadtBE city) {
+	public void save(SpielBE city) {
 		try {
 			File file = new File("../../../Spielstand/Spielstand1.xml");
-			JAXBContext jaxbContext = JAXBContext.newInstance(StadtBE.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(SpielBE.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -28,13 +28,13 @@ public class LoadSaveCtrl extends AbstractController {
 		}
 	}
 
-	public StadtBE load() {
+	public SpielBE load() {
 		try {
 			File file = new File("../../../Spielstand/Spielstand1.xml");
-			JAXBContext jaxbContext = JAXBContext.newInstance(StadtBE.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(SpielBE.class);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			StadtBE city = (StadtBE) jaxbUnmarshaller.unmarshal(file);
+			SpielBE city = (SpielBE) jaxbUnmarshaller.unmarshal(file);
 			return city;
 
 		} catch (JAXBException e) {

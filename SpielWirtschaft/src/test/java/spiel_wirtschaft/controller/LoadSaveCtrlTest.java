@@ -1,8 +1,11 @@
 package spiel_wirtschaft.controller;
 
+import org.junit.Assert;
 import org.junit.Test;
 
+import spiel_wirtschaft.model.SpielBE;
 import spiel_wirtschaft.test.AbstractTestBase;
+import spiel_wirtschaft.test.TestObjectFactory;
 
 public class LoadSaveCtrlTest extends AbstractTestBase {
 
@@ -10,11 +13,9 @@ public class LoadSaveCtrlTest extends AbstractTestBase {
 
 	@Test
 	public void testSaveLoad() {
-		// StadtBE testCity = new StadtBE();
-		// // testCity.setName("AnneTown");
-		// loadSaveCtrl.save(testCity);
-		// StadtBE cityAfterLoad = loadSaveCtrl.load();
-		// Assert.assertEquals(testCity, cityAfterLoad);
-
+		SpielBE testSpiel = TestObjectFactory.createBasicSpiel();
+		loadSaveCtrl.save(testSpiel);
+		SpielBE geladenesSpiel = loadSaveCtrl.load();
+		Assert.assertEquals(testSpiel, geladenesSpiel);
 	}
 }

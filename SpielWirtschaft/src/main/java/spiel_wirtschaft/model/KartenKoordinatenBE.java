@@ -5,10 +5,10 @@ import javax.xml.bind.annotation.XmlElement;
 public class KartenKoordinatenBE extends AbstractBE {
 
 	@XmlElement
-	final double xAxisPosition;
+	double xAxisPosition;
 
 	@XmlElement
-	final double yAxisPosition;
+	double yAxisPosition;
 
 	public double getxAxisPosition() {
 		return xAxisPosition;
@@ -18,8 +18,12 @@ public class KartenKoordinatenBE extends AbstractBE {
 		return yAxisPosition;
 	}
 
-	public KartenKoordinatenBE(double xAxisPosition, double yAxisPosition) {
+	public KartenKoordinatenBE() {
 		super();
+		;
+	}
+
+	public void init(double xAxisPosition, double yAxisPosition) {
 		this.xAxisPosition = xAxisPosition;
 		this.yAxisPosition = yAxisPosition;
 	}

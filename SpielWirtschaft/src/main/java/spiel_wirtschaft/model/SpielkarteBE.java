@@ -10,26 +10,30 @@ import javax.xml.bind.annotation.XmlElement;
 public class SpielkarteBE extends AbstractBE {
 
 	@XmlElement
-	private final int xSize;
+	private int xSize;
 
 	@XmlElement
-	private final int ySize;
+	private int ySize;
 
 	@XmlElement
-	private final KartenfeldBE[][] kartenfelder;
+	private KartenfeldBE[][] kartenfelder;
 
 	@XmlElement
-	private final List<StadtBE> staedte;
+	private List<StadtBE> staedte;
 
-	public SpielkarteBE(int xSize, int ySize) {
+	public SpielkarteBE() {
 		super();
+	}
+
+	public void init(int xSize, int ySize) {
 		staedte = new ArrayList<>();
 		this.xSize = xSize;
 		this.ySize = ySize;
 		kartenfelder = new KartenfeldBE[xSize][ySize];
 		for (int xPos = 0; xPos < xSize; xPos++) {
 			for (int yPos = 0; yPos < ySize; yPos++) {
-				kartenfelder[xPos][yPos] = new KartenfeldBE(xPos, yPos);
+				kartenfelder[xPos][yPos] = new KartenfeldBE();
+				kartenfelder[xPos][yPos].init(xPos, yPos);
 			}
 		}
 	}

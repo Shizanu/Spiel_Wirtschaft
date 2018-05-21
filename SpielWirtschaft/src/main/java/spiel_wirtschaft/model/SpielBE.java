@@ -4,23 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class SpielBE extends AbstractBE {
 
 	@XmlElement
 	private final SpielkarteBE spielkarte;
 
 	@XmlElement
-	private int runde;
+	private int runde = 0;
 
 	@XmlElement
-	private final List<NationBE> nationen;
+	private final List<NationBE> nationen = new ArrayList<>();
+
+	public SpielBE() {
+		super();
+		this.spielkarte = null;
+	}
 
 	public SpielBE(SpielkarteBE spielkarte) {
 		super();
 		this.spielkarte = spielkarte;
-		this.runde = 0;
-		this.nationen = new ArrayList<>();
 	}
 
 	public SpielkarteBE getSpielkarte() {

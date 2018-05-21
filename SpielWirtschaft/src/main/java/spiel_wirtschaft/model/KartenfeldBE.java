@@ -2,37 +2,36 @@ package spiel_wirtschaft.model;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 public class KartenfeldBE extends AbstractBE {
 
 	@XmlElement
-	private final ObjectProperty<GelaendeTypEnum> gelaendeTyp;
+	private GelaendeTypEnum gelaendeTyp;
 
 	@XmlElement
-	private final int xPos;
+	private int xPos;
 
 	@XmlElement
-	private final int yPos;
+	private int yPos;
 
-	public KartenfeldBE(int xPos, int yPos) {
+	public KartenfeldBE() {
 		super();
-		gelaendeTyp = new SimpleObjectProperty<>();
+	}
+
+	public void init(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
 
-	public final ObjectProperty<GelaendeTypEnum> gelaendeTypProperty() {
+	public final GelaendeTypEnum gelaendeTypProperty() {
 		return this.gelaendeTyp;
 	}
 
 	public final GelaendeTypEnum getGelaendeTyp() {
-		return this.gelaendeTypProperty().get();
+		return this.gelaendeTyp;
 	}
 
 	public final void setGelaendeTyp(final GelaendeTypEnum gelaendeTyp) {
-		this.gelaendeTypProperty().set(gelaendeTyp);
+		this.gelaendeTyp = gelaendeTyp;
 	}
 
 	public int getxPos() {
