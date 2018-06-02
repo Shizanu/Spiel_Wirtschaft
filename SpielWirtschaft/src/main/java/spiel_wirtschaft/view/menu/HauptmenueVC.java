@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXML;
 import spiel_wirtschaft.controller.LoadSaveCtrl;
+import spiel_wirtschaft.controller.SpielCtrl;
+import spiel_wirtschaft.model.SpielBE;
 import spiel_wirtschaft.view.AbstractViewController;
 import spiel_wirtschaft.view.PrimaryStageManager;
 import spiel_wirtschaft.view.ViewFactory;
@@ -19,6 +21,9 @@ public class HauptmenueVC extends AbstractViewController {
 	private LoadSaveCtrl loadSaveCtrl;
 
 	@Autowired
+	private SpielCtrl spielCtrl;
+
+	@Autowired
 	private ViewFactory viewFactory;
 
 	@FXML
@@ -31,8 +36,9 @@ public class HauptmenueVC extends AbstractViewController {
 	}
 
 	public void onSpielFortsetzenClicked() {
-		// TODO implement
-		loadSaveCtrl.load();
+		SpielBE spiel = loadSaveCtrl.load();
+		spielCtrl.setCurrentlyActiveSpiel(spiel);
+		rootLayoutManager.showSpiel();
 	}
 
 	public void onSpielLadenClicked() {
