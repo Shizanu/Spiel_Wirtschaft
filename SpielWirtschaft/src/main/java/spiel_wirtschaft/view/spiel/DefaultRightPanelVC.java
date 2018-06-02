@@ -2,7 +2,9 @@ package spiel_wirtschaft.view.spiel;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,7 @@ import spiel_wirtschaft.controller.NationCtrl;
 import spiel_wirtschaft.controller.SpielCtrl;
 import spiel_wirtschaft.model.NationBE;
 import spiel_wirtschaft.model.StadtBE;
+import spiel_wirtschaft.model.WarenEnum;
 import spiel_wirtschaft.util.FormatAsStringUtil;
 import spiel_wirtschaft.view.AbstractViewController;
 import spiel_wirtschaft.view.PrimaryStageManager;
@@ -37,13 +40,20 @@ public class DefaultRightPanelVC extends AbstractViewController {
 	private Label geldLabel;
 
 	@FXML
-	private TableView<StadtUebersichtRow> stadtUebersichtTable;
+	private TableView<WarenUebersichtRow> warenUebersichtTable;
+	@FXML
+	private TableColumn<WarenUebersichtRow, String> warenNameColumn;
+	@FXML
+	private TableColumn<WarenUebersichtRow, String> warenMengeColumn;
+	private ObservableList<WarenUebersichtRow> warenUebersichtData = FXCollections.observableArrayList();
 
+	@FXML
+	private TableView<StadtUebersichtRow> stadtUebersichtTable;
 	@FXML
 	private TableColumn<StadtUebersichtRow, String> stadtNameColumn;
-
 	@FXML
 	private TableColumn<StadtUebersichtRow, String> einwohnerzahlColumn;
+	private ObservableList<StadtUebersichtRow> stadtUebersichtData = FXCollections.observableArrayList();
 
 	@Autowired
 	private SpielCtrl spielCtrl;
@@ -57,13 +67,11 @@ public class DefaultRightPanelVC extends AbstractViewController {
 	@Autowired
 	private ViewFactory viewFactory;
 
-	private ObservableList<StadtUebersichtRow> stadtUebersichtData = FXCollections.observableArrayList();
-
 	@FXML
 	private void initialize() {
 		fillAktuelleRundeLabel();
 		fillGeldLabel();
-
+		fillWarenUebersichtTable();
 		fillStadtUebersichtTable();
 	}
 
@@ -77,6 +85,18 @@ public class DefaultRightPanelVC extends AbstractViewController {
 		BigDecimal geld = nationDesSpielers.getGeld();
 		String geldDisplayText = FormatAsStringUtil.formatWith2DecimalPlaces(geld);
 		geldLabel.setText("Geld: " + geldDisplayText);
+	}
+
+	private void fillWarenUebersichtTable() {
+		warenNameColumn.setCellValueFactory(row -> row.getValue().displayWarenname);
+		warenMengeColumn.setCellValueFactory(row -> row.getValue().displayWarenmenge);
+
+		warenUebersichtData.clear();
+		NationBE nationDesSpielers = nationCtrl.getNationDesSpielers();
+		for (Entry<WarenEnum, Long> entry : nationDesSpielers.getWaren().entrySet()) {
+			warenUebersichtData.add(new WarenUebersichtRow(entry.getKey(), entry.getValue()));
+		}
+		warenUebersichtTable.setItems(warenUebersichtData);
 	}
 
 	private void fillStadtUebersichtTable() {
@@ -107,6 +127,49 @@ public class DefaultRightPanelVC extends AbstractViewController {
 	public void onRundeBeendenClicked() {
 		spielCtrl.rundeBeenden();
 		primaryStageManager.showSpiel(); // TODO TRO: Introduce proper UI data refresh mechanism
+	}
+
+	private static class WarenUebersichtRow {
+		private WarenEnum ware;
+
+		private long menge;
+
+		private final StringProperty displayWarenname;
+
+		private final StringProperty displayWarenmenge;
+
+		public WarenUebersichtRow(WarenEnum ware, long menge) {
+			super();
+			this.ware = ware;
+			this.menge = menge;
+			displayWarenname = new SimpleStringProperty(StringUtils.capitalize(ware.name().toLowerCase()));
+			displayWarenmenge = new SimpleStringProperty(String.valueOf(menge));
+		}
+
+		public final StringProperty displayWarennameProperty() {
+			return this.displayWarenname;
+		}
+
+		public final String getDisplayWarenname() {
+			return this.displayWarennameProperty().get();
+		}
+
+		public final void setDisplayWarenname(final String displayWarenname) {
+			this.displayWarennameProperty().set(displayWarenname);
+		}
+
+		public final StringProperty displayWarenmengeProperty() {
+			return this.displayWarenmenge;
+		}
+
+		public final String getDisplayWarenmenge() {
+			return this.displayWarenmengeProperty().get();
+		}
+
+		public final void setDisplayWarenmenge(final String displayWarenmenge) {
+			this.displayWarenmengeProperty().set(displayWarenmenge);
+		}
+
 	}
 
 	private static class StadtUebersichtRow {

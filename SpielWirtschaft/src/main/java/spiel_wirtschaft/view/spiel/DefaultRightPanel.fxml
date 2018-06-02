@@ -18,7 +18,7 @@
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="200.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="100.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -52,10 +52,10 @@
                 <TableColumn fx:id="einwohnerzahlColumn" minWidth="0.0" prefWidth="100.0" text="Einw." />
               </columns>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <TableView fx:id="warenUebersichtTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
               <columns>
-                <TableColumn prefWidth="150.0" text="Ware" />
-                <TableColumn prefWidth="150.0" text="Menge" />
+                <TableColumn fx:id="warenNameColumn" prefWidth="150.0" text="Ware" />
+                <TableColumn fx:id="warenMengeColumn" prefWidth="150.0" text="Menge" />
               </columns>
             </TableView>
          </children>
