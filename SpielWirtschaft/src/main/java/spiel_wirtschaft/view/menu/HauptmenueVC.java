@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXML;
+import spiel_wirtschaft.controller.LoadSaveCtrl;
 import spiel_wirtschaft.view.AbstractViewController;
 import spiel_wirtschaft.view.PrimaryStageManager;
 import spiel_wirtschaft.view.ViewFactory;
@@ -13,6 +14,9 @@ public class HauptmenueVC extends AbstractViewController {
 
 	@Autowired
 	private PrimaryStageManager rootLayoutManager;
+
+	@Autowired
+	private LoadSaveCtrl loadSaveCtrl;
 
 	@Autowired
 	private ViewFactory viewFactory;
@@ -27,11 +31,11 @@ public class HauptmenueVC extends AbstractViewController {
 	}
 
 	public void onSpielFortsetzenClicked() {
-		// TODO TRO: implement
+		// TODO implement
+		loadSaveCtrl.load();
 	}
 
 	public void onSpielLadenClicked() {
-		// TODO TRO: implement
+		// TODO ANNE: implement
 	}
-
 }

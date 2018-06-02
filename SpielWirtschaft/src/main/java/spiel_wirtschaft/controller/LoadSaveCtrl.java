@@ -14,15 +14,16 @@ import spiel_wirtschaft.model.SpielBE;
 @Component
 public class LoadSaveCtrl extends AbstractController {
 
-	public void save(SpielBE city) {
+	public void save(SpielBE spiel) {
 		try {
+			// TODO: make filename editable
 			File file = new File("../../../Spielstand/Spielstand1.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(SpielBE.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-			jaxbMarshaller.marshal(city, file);
+			jaxbMarshaller.marshal(spiel, file);
 		} catch (JAXBException e) {
 			throw new RuntimeException(e);
 		}
@@ -30,12 +31,13 @@ public class LoadSaveCtrl extends AbstractController {
 
 	public SpielBE load() {
 		try {
+			// TODO: make filename editable
 			File file = new File("../../../Spielstand/Spielstand1.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(SpielBE.class);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			SpielBE city = (SpielBE) jaxbUnmarshaller.unmarshal(file);
-			return city;
+			SpielBE spiel = (SpielBE) jaxbUnmarshaller.unmarshal(file);
+			return spiel;
 
 		} catch (JAXBException e) {
 			throw new RuntimeException(e);
