@@ -67,6 +67,11 @@ public class PrimaryStageManager {
 		showDefaultRightPanel();
 	}
 
+	public void showSpeichernDialog() {
+		// todo Implement dialog that asks for a name under which the current game
+		// should be saved
+	}
+
 	private void showDefaultLeftPanel() {
 		Node leftPanelPage = viewFactory.loadView(DefaultLeftPanelVC.class).getRoot();
 		rootLayout.setLeft(leftPanelPage);
