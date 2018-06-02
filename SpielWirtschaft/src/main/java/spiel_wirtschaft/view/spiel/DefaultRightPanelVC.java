@@ -1,5 +1,6 @@
 package spiel_wirtschaft.view.spiel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import spiel_wirtschaft.controller.NationCtrl;
 import spiel_wirtschaft.controller.SpielCtrl;
+import spiel_wirtschaft.model.NationBE;
 import spiel_wirtschaft.model.StadtBE;
+import spiel_wirtschaft.util.FormatAsStringUtil;
 import spiel_wirtschaft.view.AbstractViewController;
 import spiel_wirtschaft.view.PrimaryStageManager;
 import spiel_wirtschaft.view.ViewFactory;
@@ -30,6 +34,9 @@ public class DefaultRightPanelVC extends AbstractViewController {
 	private Button rundeBeendenBtn;
 
 	@FXML
+	private Label geldLabel;
+
+	@FXML
 	private TableView<StadtUebersichtRow> stadtUebersichtTable;
 
 	@FXML
@@ -42,6 +49,9 @@ public class DefaultRightPanelVC extends AbstractViewController {
 	private SpielCtrl spielCtrl;
 
 	@Autowired
+	private NationCtrl nationCtrl;
+
+	@Autowired
 	private PrimaryStageManager primaryStageManager;
 
 	@Autowired
@@ -51,9 +61,25 @@ public class DefaultRightPanelVC extends AbstractViewController {
 
 	@FXML
 	private void initialize() {
+		fillAktuelleRundeLabel();
+		fillGeldLabel();
+
+		fillStadtUebersichtTable();
+	}
+
+	private void fillAktuelleRundeLabel() {
 		int aktuelleRunde = spielCtrl.getCurrentlyActiveSpiel().getRunde();
 		aktuelleRundeLabel.setText("Aktuelle Runde: " + aktuelleRunde);
+	}
 
+	private void fillGeldLabel() {
+		NationBE nationDesSpielers = nationCtrl.getNationDesSpielers();
+		BigDecimal geld = nationDesSpielers.getGeld();
+		String geldDisplayText = FormatAsStringUtil.formatWith2DecimalPlaces(geld);
+		geldLabel.setText("Geld: " + geldDisplayText);
+	}
+
+	private void fillStadtUebersichtTable() {
 		stadtNameColumn.setCellValueFactory(row -> row.getValue().displayName);
 		einwohnerzahlColumn.setCellValueFactory(row -> row.getValue().displayEinwohnerzahl);
 
