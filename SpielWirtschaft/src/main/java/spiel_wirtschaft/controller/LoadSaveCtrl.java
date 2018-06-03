@@ -14,6 +14,10 @@ import spiel_wirtschaft.model.SpielBE;
 @Component
 public class LoadSaveCtrl extends AbstractController {
 
+	public boolean gameExists() {
+		return new File("../../../Spielstand/Spielstand1.xml").isFile();
+	}
+
 	public void save(SpielBE spiel) {
 		try {
 			// TODO: make filename editable

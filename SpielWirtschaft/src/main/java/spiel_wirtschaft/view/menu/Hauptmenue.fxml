@@ -27,7 +27,7 @@
                </font>
             </Label>
             <Button mnemonicParsing="false" onAction="#onNeuesSpielClicked" text="Neues Spiel" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" onAction="#onSpielFortsetzenClicked" text="Spiel fortsetzen" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="fortsetzenButton" disable="true" mnemonicParsing="false" onAction="#onSpielFortsetzenClicked" text="Spiel fortsetzen" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <Button mnemonicParsing="false" onAction="#onSpielLadenClicked" text="Spiel laden" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
