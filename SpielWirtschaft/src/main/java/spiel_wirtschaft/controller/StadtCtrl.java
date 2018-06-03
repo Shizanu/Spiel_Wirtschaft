@@ -17,10 +17,13 @@ public class StadtCtrl extends AbstractController implements RundeBeendenEntityC
 	@Autowired
 	private NationCtrl nationCtrl;
 
+	public boolean gebaeudeKannGebautWerden(StadtBE stadt, Gebaeude gebaeude) {
+		return nationCtrl.kannBezahltWerden(stadt.getNation(), gebaeude.getGeldKosten(), gebaeude.getWarenKosten())
+				&& !stadt.getGebauteGebaeude().contains(gebaeude);
+	}
+
 	public void gebaudeBauen(StadtBE stadt, Gebaeude gebaeude) {
-		// TODO TRO: Bezahlen für Gebäude anschalten
-		// nationCtrl.bezahlen(stadt.getNation(), gebaeude.getGeldKosten(),
-		// gebaeude.getWarenKosten());
+		nationCtrl.bezahlen(stadt.getNation(), gebaeude.getGeldKosten(), gebaeude.getWarenKosten());
 		// TODO TRO: StadtBE sollte das Interface für Gebäude benutzen
 		stadt.addGebaeude((GebaeudeEnum) gebaeude);
 	}

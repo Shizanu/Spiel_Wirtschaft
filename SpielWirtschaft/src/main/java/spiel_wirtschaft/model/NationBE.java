@@ -2,7 +2,6 @@ package spiel_wirtschaft.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +26,7 @@ public class NationBE extends AbstractBE {
 		super();
 		staedte = new ArrayList<>();
 		geld = BigDecimal.ZERO;
-		waren = new HashMap<>();
-		for (WarenEnum ware : WarenEnum.values()) {
-			waren.put(ware, 0L);
-		}
+		waren = WarenEnum.createWarenAnzahlMap();
 	}
 
 	public NationRundenDelta getRundenDelta() {

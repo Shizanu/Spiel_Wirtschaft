@@ -12,6 +12,7 @@ import spiel_wirtschaft.model.NationBE;
 import spiel_wirtschaft.model.Ware;
 import spiel_wirtschaft.model.WarenEnum;
 import spiel_wirtschaft.model.rundendelta.NationRundenDelta;
+import spiel_wirtschaft.model.rundendelta.StadtEffekteFuerNation;
 
 @Component
 public class NationCtrl extends AbstractController implements RundeBeendenEntityCtrl<NationBE> {
@@ -31,18 +32,31 @@ public class NationCtrl extends AbstractController implements RundeBeendenEntity
 		NationRundenDelta nationRundenDelta = new NationRundenDelta();
 
 		nationRundenDelta.geldChange = GELD_BASIS_EINNAHMEN_PRO_RUNDE;
-		nation.getStaedte().forEach((stadt) -> nationRundenDelta.geldChange = nationRundenDelta.geldChange
-				.add(stadt.getEffekteFuerNation().geldEinnahmen));
-		nation.getStaedte().forEach((stadt) -> nationRundenDelta.geldChange = nationRundenDelta.geldChange
-				.add(stadt.getEffekteFuerNation().geldAusgaben));
+		nation.getStaedte().forEach(
+				(stadt) -> applyStadtEffekteFuerNationToRundenDelta(nationRundenDelta, (stadt.getEffekteFuerNation())));
 
 		nation.setRundenDelta(nationRundenDelta);
+	}
+
+	public void applyStadtEffekteFuerNationToRundenDelta(NationRundenDelta rundenDelta,
+			StadtEffekteFuerNation effekteFuerNation) {
+		rundenDelta.geldChange = rundenDelta.geldChange.add(effekteFuerNation.geldEinnahmen)
+				.subtract(effekteFuerNation.geldAusgaben);
+		for (WarenEnum ware : WarenEnum.values()) {
+			long oldValue = rundenDelta.warenChange.get(ware);
+			long newValue = oldValue + effekteFuerNation.warenEinnahmen.get(ware)
+					- effekteFuerNation.warenAusgaben.get(ware);
+			rundenDelta.warenChange.put(ware, newValue);
+		}
 	}
 
 	@Override
 	public void applyRundenDelta(NationBE nation) {
 		NationRundenDelta delta = nation.getRundenDelta();
 		nation.setGeld(nation.getGeld().add(delta.geldChange));
+		for (WarenEnum ware : WarenEnum.values()) {
+			nation.getWaren().put(ware, nation.getWaren().get(ware) + delta.warenChange.get(ware));
+		}
 		nation.setRundenDelta(null);
 	}
 

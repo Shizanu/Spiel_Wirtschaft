@@ -84,7 +84,8 @@ public class PrimaryStageManager {
 		rootLayout.setCenter(spielkartePage);
 	}
 
-	private void showDefaultRightPanel() {
+	// TODO make private again, when proper UI refresh mechanism is available
+	public void showDefaultRightPanel() {
 		Node rightPanelPage = viewFactory.loadView(DefaultRightPanelVC.class).getRoot();
 		rootLayout.setRight(rightPanelPage);
 	}

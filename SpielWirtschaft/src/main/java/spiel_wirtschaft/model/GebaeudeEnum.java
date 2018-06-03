@@ -11,13 +11,13 @@ import spiel_wirtschaft.model.effects.StadtIsolatedEffect;
 
 public enum GebaeudeEnum implements Gebaeude {
 
-	TEMPEL("Tempel", 1, Collections.emptyList(), "+5 Einwohner pro Runde",
+	TEMPEL("Tempel", 20, Collections.emptyList(), "+5 Einwohner",
 			(stadt, stadtRundenDelta) -> stadtRundenDelta.einwohnerzahlChange += 5, StadtEffektFuerNation.NONE),
-	MARKTPLATZ("Marktplatz", 1, Collections.emptyList(), "+1 Geld pro Runde", StadtIsolatedEffect.NONE, (stadt,
+	MARKTPLATZ("Marktplatz", 30, Collections.emptyList(), "+1 Geld", StadtIsolatedEffect.NONE, (stadt,
 			stadtEffekteFuerNation) -> stadtEffekteFuerNation.geldEinnahmen = stadtEffekteFuerNation.geldEinnahmen
 					.add(new BigDecimal("1"))),
-	SCHMIED("Schmied", 1, Collections.emptyList(), "Verbesserung berittener Einheiten",
-			(stadt, stadtRundenDelta) -> stadtRundenDelta.einwohnerzahlChange += 5, StadtEffektFuerNation.NONE);
+	SCHMIED("Schmied", 50, Collections.emptyList(), "+5 Eisen", StadtIsolatedEffect.NONE,
+			(stadt, stadtEffekteFuerNation) -> stadtEffekteFuerNation.increaseWarenEinnahme(WarenEnum.METALLE, 5L));
 
 	private final String gebaeudeName;
 	private final BigDecimal geldKosten;

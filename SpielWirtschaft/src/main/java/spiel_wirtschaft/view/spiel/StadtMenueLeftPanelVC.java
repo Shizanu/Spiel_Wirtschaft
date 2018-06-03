@@ -19,6 +19,7 @@ import spiel_wirtschaft.model.Gebaeude;
 import spiel_wirtschaft.model.GebaeudeEnum;
 import spiel_wirtschaft.model.StadtBE;
 import spiel_wirtschaft.view.AbstractViewController;
+import spiel_wirtschaft.view.PrimaryStageManager;
 
 @Component
 public class StadtMenueLeftPanelVC extends AbstractViewController {
@@ -55,6 +56,9 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 	@Autowired
 	private StadtCtrl stadtCtrl;
 
+	@Autowired
+	private PrimaryStageManager primaryStageManager;
+
 	private ObservableList<vorhandeneGebaeudeRow> vorhandeneGebaeudeTableData = FXCollections.observableArrayList();
 
 	private StadtBE stadt;
@@ -72,6 +76,13 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 		LOG.debug(stadt.getStadtname());
 		stadtNameLabel.setText(stadt.getStadtname());
 		this.stadt = stadt;
+
+		fillVerfuegbareGebaeude(stadt);
+
+		fillVorhandeneGebaeude(stadt);
+	}
+
+	private void fillVerfuegbareGebaeude(StadtBE stadt) {
 		gebaeudeTableData.clear();
 		for (GebaeudeEnum gebaeude : GebaeudeEnum.values()) {
 			if (!stadt.getGebauteGebaeude().contains(gebaeude)) {
@@ -80,8 +91,10 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 		}
 		verfuegbareGebaeudeTable.setItems(gebaeudeTableData);
 		verfuegbareGebaeudeTable.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> enableKaufenButton(newValue));
+				.addListener((observable, oldValue, newValue) -> verfuegbaresGebaeudeAusgewaehlt(newValue));
+	}
 
+	private void fillVorhandeneGebaeude(StadtBE stadt) {
 		vorhandeneGebaeudeNameColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeName);
 		vorhandeneGebaeudeVorteileColumn.setCellValueFactory(row -> row.getValue().displayGebaeudeVorteile);
 		vorhandeneGebaeudeTableData.clear();
@@ -93,8 +106,13 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 		}
 	}
 
-	private void enableKaufenButton(verfuegbareGebaeudeRow newValue) {
-		kaufenButton.setDisable(false);
+	private void verfuegbaresGebaeudeAusgewaehlt(verfuegbareGebaeudeRow selektiertesGebaeude) {
+		if (selektiertesGebaeude == null) {
+			kaufenButton.setDisable(true);
+		} else {
+			boolean kannGekauftWerden = stadtCtrl.gebaeudeKannGebautWerden(stadt, selektiertesGebaeude.gebaeudeEnum);
+			kaufenButton.setDisable(!kannGekauftWerden);
+		}
 	}
 
 	public void onKaufenClicked() {
@@ -102,9 +120,7 @@ public class StadtMenueLeftPanelVC extends AbstractViewController {
 		kaufenButton.setDisable(true);
 		stadtCtrl.gebaudeBauen(stadt, aktuellesGebaeudeRow.gebaeudeEnum);
 		initializeShowStadt(stadt);
-		// spielCtrl.rundeBeenden();
-		// primaryStageManager.showSpiel(); // TODO TRO: Introduce proper UI data
-		// refresh mechanism
+		primaryStageManager.showDefaultRightPanel(); // TODO TRO: Introduce proper UI data refresh mechanism
 	}
 
 	private static class verfuegbareGebaeudeRow {
