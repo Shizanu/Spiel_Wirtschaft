@@ -21,6 +21,9 @@ public class NationCtrl extends AbstractController implements RundeBeendenEntity
 	@Autowired
 	private StadtCtrl stadtCtrl;
 
+	@Autowired
+	private SpielCtrl spielCtrl;
+
 	@Override
 	public void computeRundenDelta(NationBE nation) {
 		nation.getStaedte().forEach((stadt) -> stadtCtrl.computeEffekteFuerNation(stadt));
@@ -41,6 +44,12 @@ public class NationCtrl extends AbstractController implements RundeBeendenEntity
 		NationRundenDelta delta = nation.getRundenDelta();
 		nation.setGeld(nation.getGeld().add(delta.geldChange));
 		nation.setRundenDelta(null);
+	}
+
+	// TODO Nicht mehr davon ausgehen, dass es nur eine Nation gibt. Nation des
+	// aktiven spielers sollte dem NationCtrl nicht übergeben werden.
+	public NationBE getNationDesSpielers() {
+		return spielCtrl.getCurrentlyActiveSpiel().getNationen().get(0);
 	}
 
 	public void bezahlen(NationBE nation, BigDecimal geldKosten, List<Pair<Ware, Long>> warenKosten) {
