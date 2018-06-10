@@ -1,11 +1,11 @@
 package spiel_wirtschaft.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import spiel_wirtschaft.config.SpielStartConfigConstants;
 import spiel_wirtschaft.model.KartenGenerierungsModus;
 import spiel_wirtschaft.model.NationBE;
 import spiel_wirtschaft.model.SpielBE;
@@ -33,7 +33,7 @@ public class NeuesSpielCtrl extends AbstractController {
 
 		// TODO Mehrere Nationen erstellen. Städte korrekt über Ctrl gründen und verknüpfen.
 		NationBE nation = new NationBE();
-		nation.setGeld(new BigDecimal(100));
+		nation.setGeld(SpielStartConfigConstants.SPIEL_START_GELD);
 		spiel.getNationen().add(nation);
 
 		List<StadtBE> staedteAusSpielkarteGenerieren = spielkarte.getStaedte();
