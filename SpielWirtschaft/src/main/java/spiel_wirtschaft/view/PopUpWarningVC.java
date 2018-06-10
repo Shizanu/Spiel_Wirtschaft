@@ -34,6 +34,7 @@ public class PopUpWarningVC extends AbstractViewController {
 	}
 
 	public void onAbbrechenClicked() {
+		// TODO: show last monitor instead of last saved game
 		SpielBE spiel = loadSaveCtrl.load();
 		spielCtrl.setCurrentlyActiveSpiel(spiel);
 		rootLayoutManager.showSpiel();
