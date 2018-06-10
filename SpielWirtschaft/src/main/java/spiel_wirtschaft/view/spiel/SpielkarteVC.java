@@ -1,5 +1,6 @@
 package spiel_wirtschaft.view.spiel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,17 @@ public class SpielkarteVC extends AbstractViewController {
 
 	private Circle selectedStadtMarkerCircle;
 
+	/**
+	 * We need to keep our own list of all the nodes that need to be removed from the AnchorPane when redrawing, because
+	 * we cannot blindly remove all children. That would remove our canvas among others.
+	 */
+	private List<Node> nodesToRemoveOnRedraw;
+
 	@FXML
 	private void initialize() {
 		canvas = new ResizableCanvas();
 		paneAroundCanvas.getChildren().add(canvas);
+		nodesToRemoveOnRedraw = new ArrayList<>();
 
 		// Redraw canvas when size changes.
 		canvas.widthProperty().addListener(evt -> drawSpielkarte());
@@ -99,8 +107,7 @@ public class SpielkarteVC extends AbstractViewController {
 		double sizeOfLargerMapAxis = Math.max(spielkarte.getxSize(), spielkarte.getySize());
 		feldPixelSize = sizeOfSmallerCanvasAxis / sizeOfLargerMapAxis;
 
-		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-		graphicsContext.clearRect(0, 0, canvasWidth, canvasHeight);
+		GraphicsContext graphicsContext = clearCanvas(canvasHeight, canvasWidth);
 
 		for (int xPos = 0; xPos < spielkarte.getxSize(); xPos++) {
 			for (int yPos = 0; yPos < spielkarte.getySize(); yPos++) {
@@ -135,6 +142,14 @@ public class SpielkarteVC extends AbstractViewController {
 
 	}
 
+	private GraphicsContext clearCanvas(double canvasHeight, double canvasWidth) {
+		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+		graphicsContext.clearRect(0, 0, canvasWidth, canvasHeight);
+		paneAroundCanvas.getChildren().removeAll(nodesToRemoveOnRedraw);
+		nodesToRemoveOnRedraw.clear();
+		return graphicsContext;
+	}
+
 	private void onStadtClicked(StadtBE stadt, MouseEvent event) {
 		LOG.debug("Stadt clicked " + stadt.getStadtname());
 		double radius = stadtIconSize * 0.6;
@@ -154,14 +169,41 @@ public class SpielkarteVC extends AbstractViewController {
 
 	private void addToPane(double xPos, double yPos, Node node) {
 		paneAroundCanvas.getChildren().add(node);
+		nodesToRemoveOnRedraw.add(node);
 		AnchorPane.setLeftAnchor(node, xPos);
 		AnchorPane.setTopAnchor(node, yPos);
 	}
 
 	class ResizableCanvas extends Canvas {
 
-		public ResizableCanvas() {
+		@Override
+		public double minHeight(double width) {
+			return 400;
+		}
 
+		@Override
+		public double maxHeight(double width) {
+			return Double.MAX_VALUE;
+		}
+
+		@Override
+		public double prefHeight(double width) {
+			return minHeight(width);
+		}
+
+		@Override
+		public double minWidth(double height) {
+			return 400;
+		}
+
+		@Override
+		public double prefWidth(double height) {
+			return minWidth(height);
+		}
+
+		@Override
+		public double maxWidth(double height) {
+			return Double.MAX_VALUE;
 		}
 
 		@Override
@@ -170,13 +212,8 @@ public class SpielkarteVC extends AbstractViewController {
 		}
 
 		@Override
-		public double prefWidth(double height) {
-			return getWidth();
-		}
+		public void resize(double width, double height) {
 
-		@Override
-		public double prefHeight(double width) {
-			return getHeight();
 		}
 	}
 
