@@ -12,8 +12,9 @@ public class StadtBE extends AbstractBE {
 	private transient StadtRundenDelta rundenDelta;
 	private transient StadtEffekteFuerNation effekteFuerNation;
 
-	@XmlElement
-	private NationBE nation;
+	// TODO: make two directional relationship for storing possible
+	// @XmlElement
+	private transient NationBE nation;
 
 	@XmlElement
 	private int einwohnerzahl;

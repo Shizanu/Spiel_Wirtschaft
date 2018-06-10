@@ -40,13 +40,16 @@ public class HauptmenueVC extends AbstractViewController {
 	}
 
 	public void onSpielFortsetzenClicked() {
+		// TODO: pic current file
 		SpielBE spiel = loadSaveCtrl.load();
 		spielCtrl.setCurrentlyActiveSpiel(spiel);
 		rootLayoutManager.showSpiel();
 	}
 
 	public void onSpielLadenClicked() {
-		// TODO ANNE: implement
+		SpielBE spiel = loadSaveCtrl.load();
+		spielCtrl.setCurrentlyActiveSpiel(spiel);
+		rootLayoutManager.showSpiel();
 	}
 
 }

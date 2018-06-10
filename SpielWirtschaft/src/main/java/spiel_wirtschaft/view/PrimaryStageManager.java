@@ -68,7 +68,7 @@ public class PrimaryStageManager {
 	}
 
 	public void showSpeichernDialog() {
-		// todo Implement dialog that asks for a name under which the current game
+		// TODO Implement dialog that asks for a name under which the current game
 		// should be saved
 	}
 
