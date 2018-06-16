@@ -23,6 +23,7 @@ import spiel_wirtschaft.model.NationBE;
 import spiel_wirtschaft.model.StadtBE;
 import spiel_wirtschaft.model.WarenEnum;
 import spiel_wirtschaft.util.FormatAsStringUtil;
+import spiel_wirtschaft.util.JavaFxUtils;
 import spiel_wirtschaft.view.AbstractViewController;
 import spiel_wirtschaft.view.PrimaryStageManager;
 import spiel_wirtschaft.view.ViewFactory;
@@ -97,6 +98,7 @@ public class DefaultRightPanelVC extends AbstractViewController {
 			warenUebersichtData.add(new WarenUebersichtRow(entry.getKey(), entry.getValue()));
 		}
 		warenUebersichtTable.setItems(warenUebersichtData);
+		JavaFxUtils.bindTableHeightToColumns(warenUebersichtTable);
 	}
 
 	private void fillStadtUebersichtTable() {
@@ -112,6 +114,7 @@ public class DefaultRightPanelVC extends AbstractViewController {
 
 		stadtUebersichtTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showStadtMenueLeftPanel(newValue));
+		JavaFxUtils.bindTableHeightToColumns(stadtUebersichtTable);
 	}
 
 	private void showStadtMenueLeftPanel(StadtUebersichtRow stadtUebersichtRow) {
